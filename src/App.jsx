@@ -1,21 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { Loader } from './containers/Movies/Preloader';
-import { AppLayout } from './components';
+import { AppLayout, ErrorPage, Main, ProtectedRoute } from './components';
 import { ROUTER_PATH } from './constants';
 import {
-  ErrorPage,
+  HeaderContainer,
   Login,
-  Main,
   Movies,
   Profile,
-  ProtectedRoute,
   Register,
   SavedMovies,
 } from './containers';
-import { CurrentUserContext } from './contexts';
+import { AuthContext, CurrentUserContext } from './contexts';
 import { baseTheme } from './theme';
 import { mainApi } from './utils';
 
@@ -192,84 +190,83 @@ export function App() {
     }
   }, [loggedIn, user]);
 
+  const authContextValue = useMemo(() => ({ loggedIn }), [loggedIn]);
+
   return (
     <ThemeProvider theme={baseTheme}>
       {isLoading ? (
         <Loader />
       ) : (
         <CurrentUserContext.Provider value={user}>
-          <Routes>
-            <Route
-              path={ROUTER_PATH.MAIN}
-              element={
-                <AppLayout
-                  isOpen={popupIsOpen}
-                  onClose={handleClosePopup}
-                  isSuccess={isSuccess}
-                  text={text}
+          <AuthContext.Provider value={authContextValue}>
+            <Routes>
+              <Route
+                path={ROUTER_PATH.MAIN}
+                element={
+                  <AppLayout
+                    isOpen={popupIsOpen}
+                    onClose={handleClosePopup}
+                    isSuccess={isSuccess}
+                    text={text}
+                  />
+                }>
+                <Route index element={<Main header={<HeaderContainer />} />} />
+                <Route
+                  path={ROUTER_PATH.LOGIN}
+                  element={
+                    <Login
+                      onAuthorization={handleAuthorization}
+                      isInquiry={isLoginProcess}
+                    />
+                  }
                 />
-              }>
-              <Route index element={<Main loggedIn={loggedIn} />} />
-              <Route
-                path={ROUTER_PATH.LOGIN}
-                element={
-                  <Login
-                    onAuthorization={handleAuthorization}
-                    loggedIn={loggedIn}
-                    isInquiry={isLoginProcess}
-                  />
-                }
-              />
-              <Route
-                path={ROUTER_PATH.REGISTER}
-                element={
-                  <Register
-                    onRegistration={handleRegistration}
-                    loggedIn={loggedIn}
-                    isInquiry={isRegisterProcess}
-                  />
-                }
-              />
-              <Route
-                path={ROUTER_PATH.MOVIES}
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <Movies
-                      loggedIn={loggedIn}
-                      onSaveFilm={handleSaveFilm}
-                      onDeleteFilm={handleDeleteFilm}
-                      savedMoviesList={savedMoviesList}
+                <Route
+                  path={ROUTER_PATH.REGISTER}
+                  element={
+                    <Register
+                      onRegistration={handleRegistration}
+                      isInquiry={isRegisterProcess}
                     />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path={ROUTER_PATH.SAVED_MOVIES}
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <SavedMovies
-                      loggedIn={loggedIn}
-                      onDeleteFilm={handleDeleteFilm}
-                      savedMoviesList={savedMoviesList}
-                    />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path={ROUTER_PATH.PROFILE}
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <Profile
-                      loggedIn={loggedIn}
-                      handleChangeProfile={handleChangeProfile}
-                      handleSignOut={handleSignOut}
-                    />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path={ROUTER_PATH.ALIEN} element={<ErrorPage />} />
-            </Route>
-          </Routes>
+                  }
+                />
+                <Route
+                  path={ROUTER_PATH.MOVIES}
+                  element={
+                    <ProtectedRoute loggedIn={loggedIn}>
+                      <Movies
+                        onSaveFilm={handleSaveFilm}
+                        onDeleteFilm={handleDeleteFilm}
+                        savedMoviesList={savedMoviesList}
+                      />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path={ROUTER_PATH.SAVED_MOVIES}
+                  element={
+                    <ProtectedRoute loggedIn={loggedIn}>
+                      <SavedMovies
+                        onDeleteFilm={handleDeleteFilm}
+                        savedMoviesList={savedMoviesList}
+                      />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path={ROUTER_PATH.PROFILE}
+                  element={
+                    <ProtectedRoute loggedIn={loggedIn}>
+                      <Profile
+                        handleChangeProfile={handleChangeProfile}
+                        handleSignOut={handleSignOut}
+                      />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path={ROUTER_PATH.ALIEN} element={<ErrorPage />} />
+              </Route>
+            </Routes>
+          </AuthContext.Provider>
         </CurrentUserContext.Provider>
       )}
     </ThemeProvider>

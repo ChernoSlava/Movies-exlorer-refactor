@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
+import { Footer } from '../../components';
 import { CurrentUserContext } from '../../contexts';
-import { Footer } from '../Footer';
-import { Header } from '../Header';
+import { HeaderContainer } from '../HeaderContainer';
 import { MoviesCardList } from '../Movies/MoviesCardList';
 import { SearchForm } from '../Movies/SearchForm';
 
 import { SavedMoviesStyled } from './styled';
 
-export function SavedMovies({ loggedIn, onDeleteFilm, savedMoviesList }) {
+export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
   const { email } = useContext(CurrentUserContext);
 
   const [shortMovies, setShortMovies] = useState(false);
@@ -66,7 +66,7 @@ export function SavedMovies({ loggedIn, onDeleteFilm, savedMoviesList }) {
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <HeaderContainer />
       <SavedMoviesStyled>
         <SearchForm
           onSubmit={value => handleSearchSubmit(value, shortMovies)}
@@ -86,7 +86,6 @@ export function SavedMovies({ loggedIn, onDeleteFilm, savedMoviesList }) {
 }
 
 SavedMovies.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   onDeleteFilm: PropTypes.func.isRequired,
   savedMoviesList: PropTypes.arrayOf(objectOf).isRequired,
 };

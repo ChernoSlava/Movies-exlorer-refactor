@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { NAVIGATION, ROUTER_PATH } from '../../constants';
+import { AuthContext } from '../../contexts';
 import account from '../../images/Account.svg';
 
 import {
@@ -23,9 +23,10 @@ import {
   NavigationStyled,
 } from './styled';
 
-export function Navigation({ loggedIn }) {
+export function Navigation() {
   const location = useLocation();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const { loggedIn } = useContext(AuthContext);
 
   const handleToggleMenu = () => {
     setMenuIsOpen(!menuIsOpen);
@@ -131,7 +132,3 @@ export function Navigation({ loggedIn }) {
     </NavigationStyled>
   );
 }
-
-Navigation.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-};

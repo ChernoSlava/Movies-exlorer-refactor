@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { CurrentUserContext } from '../../contexts';
 import { useForm } from '../../hooks';
-import { Header } from '../Header';
+import { HeaderContainer } from '../HeaderContainer';
 
 import {
   ProfileBorder,
@@ -19,7 +19,7 @@ import {
   ProfileTitle,
 } from './styled';
 
-export function Profile({ loggedIn, handleChangeProfile, handleSignOut }) {
+export function Profile({ handleChangeProfile, handleSignOut }) {
   const user = useContext(CurrentUserContext);
   const { name, email } = user;
 
@@ -45,7 +45,7 @@ export function Profile({ loggedIn, handleChangeProfile, handleSignOut }) {
 
   return (
     <>
-      <Header loggedIn={loggedIn} />
+      <HeaderContainer />
       <ProfileStyled>
         <ProfileForm onSubmit={handleSubmit} noValidate>
           <ProfileTitle>Добро пожаловать, уважаемый {name}!</ProfileTitle>
@@ -97,7 +97,6 @@ export function Profile({ loggedIn, handleChangeProfile, handleSignOut }) {
 }
 
 Profile.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   handleChangeProfile: PropTypes.func.isRequired,
   handleSignOut: PropTypes.func.isRequired,
 };

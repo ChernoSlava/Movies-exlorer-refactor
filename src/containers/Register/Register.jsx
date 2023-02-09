@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { ROUTER_PATH } from '../../constants';
+import { AuthContext } from '../../contexts';
 import { useForm } from '../../hooks';
-import { Logo } from '../Logo';
+import { LogoContainer } from '../LogoContainer';
 
 import {
   RegisterButton,
@@ -22,9 +23,9 @@ import {
   RegisterTitle,
 } from './styled';
 
-export function Register({ onRegistration, loggedIn, isInquiry }) {
+export function Register({ onRegistration, isInquiry }) {
   const navigation = useNavigate();
-
+  const { loggedIn } = useContext(AuthContext);
   const { values, handleChange, resetForm, errors } = useForm({});
 
   const handleSubmit = evt => {
@@ -54,7 +55,7 @@ export function Register({ onRegistration, loggedIn, isInquiry }) {
     <RegisterStyled>
       <RegisterForm onSubmit={handleSubmit} noValidate>
         <RegisterLogo>
-          <Logo />
+          <LogoContainer />
         </RegisterLogo>
         <RegisterTitle>Добро пожаловать!</RegisterTitle>
         <RegisterFieldset>
@@ -133,7 +134,6 @@ export function Register({ onRegistration, loggedIn, isInquiry }) {
 }
 
 Register.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   onRegistration: PropTypes.func.isRequired,
   isInquiry: PropTypes.bool.isRequired,
 };

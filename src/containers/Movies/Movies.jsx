@@ -1,23 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
+import { Footer } from '../../components';
 import { SHORT_DURATION } from '../../constants';
 import { CurrentUserContext } from '../../contexts';
 import { moviesApi } from '../../utils';
-import { Footer } from '../Footer';
-import { Header } from '../Header';
+import { HeaderContainer } from '../HeaderContainer';
 
 import { MoviesCardList } from './MoviesCardList';
 import { Loader } from './Preloader';
 import { SearchForm } from './SearchForm';
 import { MoviesStyled } from './styled';
 
-export function Movies({
-  loggedIn,
-  onSaveFilm,
-  onDeleteFilm,
-  savedMoviesList,
-}) {
+export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
   const { email } = useContext(CurrentUserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [moviesFromSearch, setMoviesFromSearch] = useState([]);
@@ -132,7 +127,7 @@ export function Movies({
   return (
     <>
       {isLoading && <Loader />}
-      <Header loggedIn={loggedIn} />
+      <HeaderContainer />
       <MoviesStyled>
         <SearchForm
           onSubmit={value => handleSearch(value, shortMovies)}
@@ -153,7 +148,6 @@ export function Movies({
 }
 
 Movies.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   onSaveFilm: PropTypes.func.isRequired,
   onDeleteFilm: PropTypes.func.isRequired,
   savedMoviesList: PropTypes.arrayOf(objectOf).isRequired,

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 
 import { ROUTER_PATH } from '../../constants';
+import { AuthContext } from '../../contexts';
 import { useForm } from '../../hooks';
 import sauron from '../../sound/sauron.mp3';
-import { Logo } from '../Logo';
+import { LogoContainer } from '../LogoContainer';
 
 import {
   LoginButtonContainer,
@@ -26,9 +27,9 @@ import {
   LoginTitle,
 } from './styled';
 
-export function Login({ onAuthorization, loggedIn, isInquiry }) {
+export function Login({ onAuthorization, isInquiry }) {
   const navigation = useNavigate();
-
+  const { loggedIn } = useContext(AuthContext);
   const { values, handleChange, resetForm, errors } = useForm({});
   const [checkboxActive, setCheckboxActive] = useState(false);
 
@@ -60,7 +61,7 @@ export function Login({ onAuthorization, loggedIn, isInquiry }) {
     <LoginStyled>
       <LoginForm onSubmit={handleSubmit} noValidate>
         <LoginLogo>
-          <Logo />
+          <LogoContainer />
         </LoginLogo>
         <LoginTitle>Скорее на борт!</LoginTitle>
         <LoginFieldset>
@@ -131,7 +132,6 @@ export function Login({ onAuthorization, loggedIn, isInquiry }) {
 }
 
 Login.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   isInquiry: PropTypes.bool.isRequired,
   onAuthorization: PropTypes.func.isRequired,
 };

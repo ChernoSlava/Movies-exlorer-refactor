@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { ROUTER_PATH } from '../../../constants';
+import { CurrentUserContext } from '../../../contexts';
 import { useForm } from '../../../hooks';
-import { CurrentUserContext } from '../../contexts';
 
 import {
   SearchFormButton,

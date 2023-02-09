@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { Loader } from './components/Movies/Preloader';
+import { Loader } from './containers/Movies/Preloader';
+import { AppLayout } from './components';
+import { ROUTER_PATH } from './constants';
 import {
-  AppLayout,
-  CurrentUserContext,
   ErrorPage,
   Login,
   Main,
@@ -14,8 +14,8 @@ import {
   ProtectedRoute,
   Register,
   SavedMovies,
-} from './components';
-import { ROUTER_PATH } from './constants';
+} from './containers';
+import { CurrentUserContext } from './contexts';
 import { baseTheme } from './theme';
 import { mainApi } from './utils';
 

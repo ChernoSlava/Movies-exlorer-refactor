@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
-import { CurrentUserContext } from '../contexts';
+import { CurrentUserContext } from '../../contexts';
 import { Footer } from '../Footer';
 import { Header } from '../Header';
 import { MoviesCardList } from '../Movies/MoviesCardList';

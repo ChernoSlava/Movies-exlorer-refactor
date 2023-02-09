@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
 import { SHORT_DURATION } from '../../constants';
+import { CurrentUserContext } from '../../contexts';
 import { moviesApi } from '../../utils';
-import { CurrentUserContext } from '../contexts';
 import { Footer } from '../Footer';
 import { Header } from '../Header';
 

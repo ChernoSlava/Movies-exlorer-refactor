@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import { CurrentUserContext } from '../../contexts';
 import { useForm } from '../../hooks';
-import { CurrentUserContext } from '../contexts';
 import { Header } from '../Header';
 
 import {

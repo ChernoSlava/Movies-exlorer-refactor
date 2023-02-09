@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Popup } from '../Popup';
+import { Popup } from '../../containers/Popup';
 
 import { GlobalStyles } from './GlobalStyles';
 import { AppLayoutStyled } from './styled';

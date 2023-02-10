@@ -9,3 +9,4 @@ export { SavedMovies } from './SavedMovies';
 export { ErrorPage } from '../components/ErrorPage';
 export { Popup } from '../components/Popup';
 export { HeaderContainer } from './HeaderContainer';
+export { ErrorPageContainer } from './ErrorPageContainer';

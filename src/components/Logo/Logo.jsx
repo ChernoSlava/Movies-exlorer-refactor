@@ -1,19 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import ico from './images/Logo.svg';
 import { LogoIco } from './styled';
 
-export function Logo({ arialLabel, logoAlt, url }) {
+export function Logo({ arialLabel, logoAlt, onClick }) {
   return (
-    <Link to={url} aria-label={arialLabel}>
+    <span onClick={onClick} aria-label={arialLabel}>
       <LogoIco src={ico} alt={logoAlt} />
-    </Link>
+    </span>
   );
 }
 Logo.propTypes = {
   arialLabel: PropTypes.string.isRequired,
   logoAlt: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

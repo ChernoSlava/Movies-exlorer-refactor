@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { ROUTER_PATH } from '../../constants';
 import { AuthContext } from '../../contexts';
@@ -23,9 +22,10 @@ import {
   RegisterTitle,
 } from './styled';
 
-export function Register({ onRegistration, isInquiry }) {
+export function RegisterContainer() {
   const navigation = useNavigate();
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn, onRegistration, isRegisterProcess } =
+    useContext(AuthContext);
   const { values, handleChange, resetForm, errors } = useForm({});
 
   const handleSubmit = evt => {
@@ -35,7 +35,7 @@ export function Register({ onRegistration, isInquiry }) {
 
   useEffect(() => {
     resetForm();
-  }, [resetForm, isInquiry]);
+  }, [resetForm, isRegisterProcess]);
 
   const isErrorSpanName = errors.name;
   const isErrorSpanEmail = errors.email;
@@ -47,7 +47,7 @@ export function Register({ onRegistration, isInquiry }) {
 
   const isErrors = errors.name || errors.email || errors.password;
   const isEmptyValues = !values.name || !values.password || !values.email;
-  const isDisabled = isErrors || isEmptyValues || isInquiry;
+  const isDisabled = isErrors || isEmptyValues || isRegisterProcess;
 
   return loggedIn ? (
     navigation(ROUTER_PATH.MAIN)
@@ -66,7 +66,7 @@ export function Register({ onRegistration, isInquiry }) {
             <RegisterField>Имя</RegisterField>
             <RegisterInput
               isErr={isErrorInputName}
-              isInquiry={isInquiry}
+              isInquiry={isRegisterProcess}
               name="name"
               placeholder="Ваше имя"
               minLength={2}
@@ -75,7 +75,7 @@ export function Register({ onRegistration, isInquiry }) {
               required
               onChange={handleChange}
               value={values.name || ''}
-              disabled={isInquiry}
+              disabled={isRegisterProcess}
             />
           </RegisterLabel>
           <RegisterLabel htmlFor="email">
@@ -85,14 +85,14 @@ export function Register({ onRegistration, isInquiry }) {
             <RegisterField>Космо почта</RegisterField>
             <RegisterInput
               isErr={isErrorInputEmail}
-              isInquiry={isInquiry}
+              isInquiry={isRegisterProcess}
               name="email"
               placeholder="star@mail.ru"
               type="email"
               required
               onChange={handleChange}
               value={values.email || ''}
-              disabled={isInquiry}
+              disabled={isRegisterProcess}
               autoComplete="email"
             />
           </RegisterLabel>
@@ -103,7 +103,7 @@ export function Register({ onRegistration, isInquiry }) {
             <RegisterField>Космо пароль</RegisterField>
             <RegisterInput
               isErr={isErrorInputPassw}
-              isInquiry={isInquiry}
+              isInquiry={isRegisterProcess}
               name="password"
               placeholder="Пароль"
               minLength={6}
@@ -111,7 +111,7 @@ export function Register({ onRegistration, isInquiry }) {
               required
               onChange={handleChange}
               value={values.password || ''}
-              disabled={isInquiry}
+              disabled={isRegisterProcess}
               autoComplete="new-password"
             />
           </RegisterLabel>
@@ -132,8 +132,3 @@ export function Register({ onRegistration, isInquiry }) {
     </RegisterStyled>
   );
 }
-
-Register.propTypes = {
-  onRegistration: PropTypes.func.isRequired,
-  isInquiry: PropTypes.bool.isRequired,
-};

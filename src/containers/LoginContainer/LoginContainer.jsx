@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 
 import { ROUTER_PATH } from '../../constants';
@@ -27,9 +26,9 @@ import {
   LoginTitle,
 } from './styled';
 
-export function Login({ onAuthorization, isInquiry }) {
+export function LoginContainer() {
   const navigation = useNavigate();
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn, onAuthorization, isLoginProcess } = useContext(AuthContext);
   const { values, handleChange, resetForm, errors } = useForm({});
   const [checkboxActive, setCheckboxActive] = useState(false);
 
@@ -49,11 +48,11 @@ export function Login({ onAuthorization, isInquiry }) {
 
   useEffect(() => {
     resetForm();
-  }, [resetForm, isInquiry]);
+  }, [resetForm, isLoginProcess]);
 
   const isErrors = errors.email || errors.password;
   const isEmptyValues = !values.password || !values.email;
-  const isDisabled = isErrors || isEmptyValues || isInquiry;
+  const isDisabled = isErrors || isEmptyValues || isLoginProcess;
 
   return loggedIn ? (
     navigation(ROUTER_PATH.MAIN)
@@ -73,13 +72,13 @@ export function Login({ onAuthorization, isInquiry }) {
             <LoginInput
               onChange={handleChange}
               isError={errors.email}
-              isDisa={isInquiry}
+              isDisa={isLoginProcess}
               name="email"
               placeholder="star@mail.ru"
               type="email"
               required
               value={values.email || ''}
-              disabled={isInquiry}
+              disabled={isLoginProcess}
               autoComplete="email"
             />
           </LoginLabel>
@@ -91,14 +90,14 @@ export function Login({ onAuthorization, isInquiry }) {
             <LoginInput
               onChange={handleChange}
               isError={errors.password}
-              isDisa={isInquiry}
+              isDisa={isLoginProcess}
               name="password"
               placeholder="Пароль"
               minLength={6}
               type={checkboxActive ? 'text' : 'password'}
               required
               value={values.password || ''}
-              disabled={isInquiry}
+              disabled={isLoginProcess}
               autoComplete="current-password"
             />
             <LoginCheckbox
@@ -130,8 +129,3 @@ export function Login({ onAuthorization, isInquiry }) {
     </LoginStyled>
   );
 }
-
-Login.propTypes = {
-  isInquiry: PropTypes.bool.isRequired,
-  onAuthorization: PropTypes.func.isRequired,
-};

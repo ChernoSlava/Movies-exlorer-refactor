@@ -8,10 +8,10 @@ import { ROUTER_PATH } from './constants';
 import {
   ErrorPageContainer,
   HeaderContainer,
-  Login,
+  LoginContainer,
   Movies,
   Profile,
-  Register,
+  RegisterContainer,
   SavedMovies,
 } from './containers';
 import { AuthContext, CurrentUserContext } from './contexts';
@@ -191,7 +191,22 @@ export function App() {
     }
   }, [loggedIn, user]);
 
-  const authContextValue = useMemo(() => ({ loggedIn }), [loggedIn]);
+  const authContextValue = useMemo(
+    () => ({
+      loggedIn,
+      isLoginProcess,
+      isRegisterProcess,
+      onAuthorization: handleAuthorization,
+      onRegistration: handleRegistration,
+    }),
+    [
+      loggedIn,
+      isLoginProcess,
+      isRegisterProcess,
+      handleAuthorization,
+      handleRegistration,
+    ],
+  );
 
   return (
     <ThemeProvider theme={baseTheme}>
@@ -212,23 +227,10 @@ export function App() {
                   />
                 }>
                 <Route index element={<Main header={<HeaderContainer />} />} />
-                <Route
-                  path={ROUTER_PATH.LOGIN}
-                  element={
-                    <Login
-                      onAuthorization={handleAuthorization}
-                      isInquiry={isLoginProcess}
-                    />
-                  }
-                />
+                <Route path={ROUTER_PATH.LOGIN} element={<LoginContainer />} />
                 <Route
                   path={ROUTER_PATH.REGISTER}
-                  element={
-                    <Register
-                      onRegistration={handleRegistration}
-                      isInquiry={isRegisterProcess}
-                    />
-                  }
+                  element={<RegisterContainer />}
                 />
                 <Route
                   path={ROUTER_PATH.MOVIES}

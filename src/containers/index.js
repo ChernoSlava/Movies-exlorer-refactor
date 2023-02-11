@@ -1,12 +1,12 @@
-export { Logo } from '../components/Logo';
-export { Footer } from '../components/Footer';
-export { Login } from './Login';
+// export { Logo } from '../components/Logo';
+// export { Footer } from '../components/Footer';
+export { LoginContainer } from './LoginContainer';
 export { Movies } from './Movies';
 export { Navigation } from './Navigation';
 export { Profile } from './Profile';
-export { Register } from './Register';
+export { RegisterContainer } from './RegisterContainer';
 export { SavedMovies } from './SavedMovies';
-export { ErrorPage } from '../components/ErrorPage';
-export { Popup } from '../components/Popup';
+// export { ErrorPage } from '../components/ErrorPage';
+// export { Popup } from '../components/Popup';
 export { HeaderContainer } from './HeaderContainer';
 export { ErrorPageContainer } from './ErrorPageContainer';

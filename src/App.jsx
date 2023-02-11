@@ -3,9 +3,10 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { Loader } from './containers/Movies/Preloader';
-import { AppLayout, ErrorPage, Main, ProtectedRoute } from './components';
+import { AppLayout, Main, ProtectedRoute } from './components';
 import { ROUTER_PATH } from './constants';
 import {
+  ErrorPageContainer,
   HeaderContainer,
   Login,
   Movies,
@@ -263,7 +264,10 @@ export function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route path={ROUTER_PATH.ALIEN} element={<ErrorPage />} />
+                <Route
+                  path={ROUTER_PATH.ALIEN}
+                  element={<ErrorPageContainer />}
+                />
               </Route>
             </Routes>
           </AuthContext.Provider>

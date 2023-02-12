@@ -6,4 +6,6 @@ export const AuthContext = createContext({
   isRegisterProcess: false,
   onAuthorization: () => {},
   onRegistration: () => {},
+  onChangeProfile: () => {},
+  onSignOut: () => {},
 });

@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { Popup } from './components/Popup';
 import { Loader } from './components/Preloader';
 import { AppLayout, Main, ProtectedRoute } from './components';
 import { ROUTER_PATH } from './constants';
@@ -11,7 +10,7 @@ import {
   HeaderContainer,
   LoginContainer,
   Movies,
-  Profile,
+  ProfileContainer,
   RegisterContainer,
   SavedMovies,
 } from './containers';
@@ -199,6 +198,8 @@ export function App() {
       isRegisterProcess,
       onAuthorization: handleAuthorization,
       onRegistration: handleRegistration,
+      onSignOut: handleSignOut,
+      onChangeProfile: handleChangeProfile,
     }),
     [
       loggedIn,
@@ -206,6 +207,8 @@ export function App() {
       isRegisterProcess,
       handleAuthorization,
       handleRegistration,
+      handleChangeProfile,
+      handleSignOut,
     ],
   );
 
@@ -220,14 +223,12 @@ export function App() {
               <Route
                 path={ROUTER_PATH.MAIN}
                 element={
-                  <AppLayout>
-                    <Popup
-                      isOpen={popupIsOpen}
-                      onClose={handleClosePopup}
-                      isSuccess={isSuccess}
-                      text={text}
-                    />
-                  </AppLayout>
+                  <AppLayout
+                    isOpen={popupIsOpen}
+                    onClose={handleClosePopup}
+                    isSuccess={isSuccess}
+                    text={text}
+                  />
                 }>
                 <Route index element={<Main header={<HeaderContainer />} />} />
                 <Route path={ROUTER_PATH.LOGIN} element={<LoginContainer />} />
@@ -238,7 +239,7 @@ export function App() {
                 <Route
                   path={ROUTER_PATH.MOVIES}
                   element={
-                    <ProtectedRoute loggedIn={loggedIn}>
+                    <ProtectedRoute>
                       <Movies
                         onSaveFilm={handleSaveFilm}
                         onDeleteFilm={handleDeleteFilm}
@@ -250,7 +251,7 @@ export function App() {
                 <Route
                   path={ROUTER_PATH.SAVED_MOVIES}
                   element={
-                    <ProtectedRoute loggedIn={loggedIn}>
+                    <ProtectedRoute>
                       <SavedMovies
                         onDeleteFilm={handleDeleteFilm}
                         savedMoviesList={savedMoviesList}
@@ -261,11 +262,8 @@ export function App() {
                 <Route
                   path={ROUTER_PATH.PROFILE}
                   element={
-                    <ProtectedRoute loggedIn={loggedIn}>
-                      <Profile
-                        handleChangeProfile={handleChangeProfile}
-                        handleSignOut={handleSignOut}
-                      />
+                    <ProtectedRoute>
+                      <ProfileContainer />
                     </ProtectedRoute>
                   }
                 />

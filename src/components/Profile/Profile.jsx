@@ -1,9 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { CurrentUserContext } from '../../contexts';
-import { useForm } from '../../hooks';
-import { HeaderContainer } from '../HeaderContainer';
+import { AuthContext, CurrentUserContext } from '../../contexts';
 
 import {
   ProfileBorder,
@@ -19,33 +17,22 @@ import {
   ProfileTitle,
 } from './styled';
 
-export function Profile({ handleChangeProfile, handleSignOut }) {
-  const user = useContext(CurrentUserContext);
-  const { name, email } = user;
-
-  const { values, handleChange, resetForm, errors } = useForm({});
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    handleChangeProfile(values);
-  };
-
-  useEffect(() => {
-    if (user) {
-      resetForm(user, {});
-    }
-  }, [user, resetForm]);
-
-  const isNotValues = name === values.name && email === values.email;
-
-  const isDisabled = errors.name || errors.email || isNotValues;
-
-  const isInutErrorName = errors.name;
-  const isInutErrorEmail = errors.email;
+export function Profile({
+  header,
+  isDisabled,
+  handleSubmit,
+  handleChange,
+  values,
+  errors,
+  isInutErrorName,
+  isInutErrorEmail,
+}) {
+  const { onSignOut } = useContext(AuthContext);
+  const { name } = useContext(CurrentUserContext);
 
   return (
     <>
-      <HeaderContainer />
+      {header}
       <ProfileStyled>
         <ProfileForm onSubmit={handleSubmit} noValidate>
           <ProfileTitle>Добро пожаловать, уважаемый {name}!</ProfileTitle>
@@ -85,7 +72,7 @@ export function Profile({ handleChangeProfile, handleSignOut }) {
                 disabled={isDisabled}>
                 Изменить хроники
               </ProfileButton>
-              <ProfileButton type="button" exit onClick={handleSignOut}>
+              <ProfileButton type="button" exit onClick={onSignOut}>
                 Покинуть корабль
               </ProfileButton>
             </ProfileButtonsContainer>
@@ -97,6 +84,24 @@ export function Profile({ handleChangeProfile, handleSignOut }) {
 }
 
 Profile.propTypes = {
-  handleChangeProfile: PropTypes.func.isRequired,
-  handleSignOut: PropTypes.func.isRequired,
+  errors: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  values: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  header: PropTypes.element.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  isInutErrorName: PropTypes.bool,
+  isInutErrorEmail: PropTypes.bool,
+};
+Profile.defaultProps = {
+  errors: {},
+  values: {},
+  isInutErrorName: undefined,
+  isInutErrorEmail: undefined,
 };

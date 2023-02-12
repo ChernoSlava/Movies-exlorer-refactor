@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { ROUTER_PATH } from '../../constants';
+import { AuthContext } from '../../contexts';
 
-export function ProtectedRoute({ loggedIn, children }) {
+export function ProtectedRoute({ children }) {
+  const { loggedIn } = useContext(AuthContext);
+
   const location = useLocation();
   if (!loggedIn) {
     return (
@@ -16,6 +19,5 @@ export function ProtectedRoute({ loggedIn, children }) {
 }
 
 ProtectedRoute.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   children: PropTypes.element.isRequired,
 };

@@ -26,7 +26,7 @@ export function ProfileContainer() {
 
   const isNotValues = name === values.name && email === values.email;
 
-  const isDisabled = errors.name || errors.email || isNotValues;
+  const isDisabled = !!errors.name || !!errors.email || !!isNotValues;
 
   const isInutErrorName = !!errors.name;
   const isInutErrorEmail = !!errors.email;

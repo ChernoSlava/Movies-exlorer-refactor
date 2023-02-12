@@ -8,4 +8,8 @@ export const AuthContext = createContext({
   onRegistration: () => {},
   onChangeProfile: () => {},
   onSignOut: () => {},
+  isOpen: false,
+  onClose: () => {},
+  isSuccess: false,
+  text: '',
 });

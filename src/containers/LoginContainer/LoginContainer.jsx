@@ -21,7 +21,7 @@ export function LoginContainer() {
     resetForm();
   }, [resetForm, isLoginProcess]);
 
-  const isErrors = errors.email || errors.password;
+  const isErrors = !!errors.email || !!errors.password;
   const isEmptyValues = !values.password || !values.email;
   const isDisabled = isErrors || isEmptyValues || isLoginProcess;
 

@@ -200,6 +200,10 @@ export function App() {
       onRegistration: handleRegistration,
       onSignOut: handleSignOut,
       onChangeProfile: handleChangeProfile,
+      isOpen: popupIsOpen,
+      onClose: handleClosePopup,
+      isSuccess,
+      text,
     }),
     [
       loggedIn,
@@ -209,6 +213,10 @@ export function App() {
       handleRegistration,
       handleChangeProfile,
       handleSignOut,
+      popupIsOpen,
+      handleClosePopup,
+      isSuccess,
+      text,
     ],
   );
 
@@ -220,16 +228,7 @@ export function App() {
         <CurrentUserContext.Provider value={user}>
           <AuthContext.Provider value={authContextValue}>
             <Routes>
-              <Route
-                path={ROUTER_PATH.MAIN}
-                element={
-                  <AppLayout
-                    isOpen={popupIsOpen}
-                    onClose={handleClosePopup}
-                    isSuccess={isSuccess}
-                    text={text}
-                  />
-                }>
+              <Route path={ROUTER_PATH.MAIN} element={<AppLayout />}>
                 <Route index element={<Main header={<HeaderContainer />} />} />
                 <Route path={ROUTER_PATH.LOGIN} element={<LoginContainer />} />
                 <Route

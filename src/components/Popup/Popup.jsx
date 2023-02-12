@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect } from 'react';
+
+import { AuthContext } from '../../contexts';
 
 import notSuccessIco from './images/Failed.svg';
 import successIco from './images/Success.svg';
@@ -11,7 +12,9 @@ import {
   PopupStyled,
 } from './styled';
 
-export function Popup({ isOpen, onClose, text, isSuccess }) {
+export function Popup() {
+  const { isOpen, onClose, isSuccess, text } = useContext(AuthContext);
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -46,10 +49,3 @@ export function Popup({ isOpen, onClose, text, isSuccess }) {
     </PopupStyled>
   );
 }
-
-Popup.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  isSuccess: PropTypes.bool.isRequired,
-};

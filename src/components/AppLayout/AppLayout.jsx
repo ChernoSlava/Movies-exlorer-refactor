@@ -8,12 +8,12 @@ import { AppLayoutStyled } from './styled';
 
 import './AppLayout.css';
 
-export function AppLayout({ ...props }) {
+export function AppLayout() {
   return (
     <>
       <GlobalStyles />
       <AppLayoutStyled>
-        <Popup {...props} />
+        <Popup />
         <Outlet />
       </AppLayoutStyled>
     </>

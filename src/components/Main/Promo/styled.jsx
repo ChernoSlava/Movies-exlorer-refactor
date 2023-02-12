@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import promoImage from '../../../images/MainIco-min.jpg';
+import promoImage from './images/MainIco-min.jpg';
 
 export const PromoStyled = styled.section`
   margin: 0;

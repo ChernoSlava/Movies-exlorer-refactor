@@ -2,7 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { Loader } from './containers/Movies/Preloader';
+import { Popup } from './components/Popup';
+import { Loader } from './components/Preloader';
 import { AppLayout, Main, ProtectedRoute } from './components';
 import { ROUTER_PATH } from './constants';
 import {
@@ -219,12 +220,14 @@ export function App() {
               <Route
                 path={ROUTER_PATH.MAIN}
                 element={
-                  <AppLayout
-                    isOpen={popupIsOpen}
-                    onClose={handleClosePopup}
-                    isSuccess={isSuccess}
-                    text={text}
-                  />
+                  <AppLayout>
+                    <Popup
+                      isOpen={popupIsOpen}
+                      onClose={handleClosePopup}
+                      isSuccess={isSuccess}
+                      text={text}
+                    />
+                  </AppLayout>
                 }>
                 <Route index element={<Main header={<HeaderContainer />} />} />
                 <Route path={ROUTER_PATH.LOGIN} element={<LoginContainer />} />

@@ -7,3 +7,4 @@ export { Main } from './Main';
 export { Footer } from './Footer';
 export { Login } from './Login';
 export { Register } from './Register';
+export { Loader } from './Preloader';

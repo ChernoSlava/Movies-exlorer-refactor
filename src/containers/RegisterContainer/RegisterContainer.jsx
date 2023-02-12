@@ -22,7 +22,7 @@ export function RegisterContainer() {
     resetForm();
   }, [resetForm, isRegisterProcess]);
 
-  const isErrors = errors.name || errors.email || errors.password;
+  const isErrors = !!errors.name || !!errors.email || !!errors.password;
   const isEmptyValues = !values.name || !values.password || !values.email;
   const isDisabled = isErrors || isEmptyValues || isRegisterProcess;
 
@@ -34,9 +34,9 @@ export function RegisterContainer() {
       isDisabled={isDisabled}
       handleChange={handleChange}
       handleSubmit={handleSubmit}
-      value={values}
+      values={values}
       errors={errors}
-      isRegisterProcess={isRegisterProcess}
+      isRegisterProcess={isRegisterProcess || false}
       loginUrl={ROUTER_PATH.LOGIN}
     />
   );

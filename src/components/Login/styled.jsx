@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components/macro';
 
-import closedEye from '../../images/ClosedEye.png';
-import openedEye from '../../images/SauronEye.png';
+import closedEye from './images/ClosedEye.png';
+import openedEye from './images/SauronEye.png';
 
 export const LoginStyled = styled.section`
   margin: 0;
@@ -139,12 +138,7 @@ export const LoginInput = styled.input`
       : ''};
 `;
 
-export const LoginCheckbox = styled.input`
-  cursor: pointer;
-  display: none;
-`;
-
-export const LoginLabelForCheckbox = styled.label`
+export const TogglePasswordDisplay = styled.div`
   padding: 0;
   margin: 0;
   position: absolute;
@@ -205,7 +199,7 @@ export const LoginSubmitButton = styled.button`
     `}
 `;
 
-export const LoginLinkText = styled.p`
+export const LoginLinkText = styled.div`
   margin: 0;
   padding: 0;
   padding-top: 16px;
@@ -216,10 +210,16 @@ export const LoginLinkText = styled.p`
   font-size: 14px;
   line-height: 17px;
   text-align: center;
+  display: flex;
+  align-self: center;
   color: ${props => props.theme.colors.grey10};
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
 `;
 
-export const LoginLink = styled(Link)`
+export const LoginLink = styled.nav`
   margin: 0;
   padding: 0;
   padding-left: 6px;
@@ -231,4 +231,5 @@ export const LoginLink = styled(Link)`
   text-align: center;
   color: ${props => props.theme.colors.blue10};
   text-decoration: none;
+  cursor: pointer;
 `;

@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer } from '../../components';
+import { Loader } from '../../components/Preloader';
 import { SHORT_DURATION } from '../../constants';
 import { CurrentUserContext } from '../../contexts';
 import { moviesApi } from '../../utils';
 import { HeaderContainer } from '../HeaderContainer';
 
 import { MoviesCardList } from './MoviesCardList';
-import { Loader } from './Preloader';
 import { SearchForm } from './SearchForm';
 import { MoviesStyled } from './styled';
 

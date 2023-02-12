@@ -1,7 +1,6 @@
 import React from 'react';
 
-import errow from '../../../images/errow.svg';
-
+import errow from './images/errow.svg';
 import {
   PortfolioContainer,
   PortfolioIco,

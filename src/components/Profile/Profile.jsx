@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-import { AuthContext, CurrentUserContext } from '../../contexts';
 
 import {
   ProfileBorder,
@@ -26,10 +24,9 @@ export function Profile({
   errors,
   isInutErrorName,
   isInutErrorEmail,
+  onSignOut,
+  name,
 }) {
-  const { onSignOut } = useContext(AuthContext);
-  const { name } = useContext(CurrentUserContext);
-
   return (
     <>
       {header}
@@ -49,6 +46,7 @@ export function Profile({
                 required
                 value={values.name || ''}
                 onChange={handleChange}
+                placeholder="name"
               />
             </ProfileLabel>
             <ProfileBorder />
@@ -62,6 +60,7 @@ export function Profile({
                 required
                 value={values.email || ''}
                 onChange={handleChange}
+                placeholder="email"
               />
             </ProfileLabel>
             <ProfileButtonsContainer>
@@ -98,6 +97,8 @@ Profile.propTypes = {
   isDisabled: PropTypes.bool.isRequired,
   isInutErrorName: PropTypes.bool,
   isInutErrorEmail: PropTypes.bool,
+  onSignOut: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
 };
 Profile.defaultProps = {
   errors: {},

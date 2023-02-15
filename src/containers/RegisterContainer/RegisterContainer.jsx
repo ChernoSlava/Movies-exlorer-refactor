@@ -8,7 +8,7 @@ import { useForm } from '../../hooks';
 import { LogoContainer } from '../LogoContainer';
 
 export function RegisterContainer() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const { loggedIn, onRegistration, isRegisterProcess } =
     useContext(AuthContext);
   const { values, handleChange, resetForm, errors } = useForm({});
@@ -27,7 +27,7 @@ export function RegisterContainer() {
   const isDisabled = isErrors || isEmptyValues || isRegisterProcess;
 
   return loggedIn ? (
-    navigation(ROUTER_PATH.MAIN)
+    navigate(ROUTER_PATH.MAIN)
   ) : (
     <Register
       logo={<LogoContainer />}
@@ -37,7 +37,7 @@ export function RegisterContainer() {
       values={values}
       errors={errors}
       isRegisterProcess={isRegisterProcess || false}
-      loginUrl={ROUTER_PATH.LOGIN}
+      onClickForNavigate={() => navigate(ROUTER_PATH.LOGIN)}
     />
   );
 }

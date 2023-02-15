@@ -6,7 +6,7 @@ import { useForm } from '../../hooks';
 import { HeaderContainer } from '../HeaderContainer';
 
 export function ProfileContainer() {
-  const { onChangeProfile } = useContext(AuthContext);
+  const { onChangeProfile, onSignOut } = useContext(AuthContext);
 
   const user = useContext(CurrentUserContext);
   const { name, email } = user;
@@ -41,6 +41,8 @@ export function ProfileContainer() {
       errors={errors}
       isInutErrorName={isInutErrorName}
       isInutErrorEmail={isInutErrorEmail}
+      onSignOut={onSignOut}
+      name={name}
     />
   );
 }

@@ -3,27 +3,26 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 
 import { useForm } from '../../../hooks';
-import { Logo } from '../../Logo';
-import { Login } from '../Login';
+import { Profile } from '../Profile';
 
 export default {
-  title: 'Example/Login',
-  component: Login,
-  argTypes: {
-    onClickForNavigate: { action: 'clicked' },
-  },
+  title: 'Example/Profile',
+  component: Profile,
 };
 
 const Template = args => {
   const { values, errors, handleChange } = useForm({});
   return (
-    <Login
+    <Profile
       {...args}
       values={values}
       errors={errors}
       handleChange={e => {
         handleChange(e);
         action('handleChange')(e);
+      }}
+      onSignOut={e => {
+        action('onSignOut')(e);
       }}
     />
   );
@@ -32,19 +31,12 @@ const Template = args => {
 export const Primary = Template.bind({});
 
 Primary.args = {
+  header: <h1>Header</h1>,
+  isInutErrorName: false,
+  isInutErrorEmail: false,
+  name: 'Slava',
   handleSubmit: e => {
     e.preventDefault();
     action('handleSubmit')(e);
   },
-  logo: (
-    <Logo
-      arialLabel="Arial-label"
-      logoAlt="alt"
-      onClick={e => {
-        action('onClick')(e);
-      }}
-    />
-  ),
-  isLoginProcess: false,
-  isDisabled: false,
 };

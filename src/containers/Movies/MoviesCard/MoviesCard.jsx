@@ -79,21 +79,3 @@ MoviesCard.defaultProps = {
   onSaveFilm: () => {},
   saved: undefined,
 };
-// saved: PropTypes.objectOf(
-//   shape({
-//     country: PropTypes.string.isRequired,
-//     description: PropTypes.string.isRequired,
-//     director: PropTypes.string.isRequired,
-//     duration: PropTypes.number.isRequired,
-//     image: PropTypes.string.isRequired,
-//     movieId: PropTypes.number.isRequired,
-//     nameEN: PropTypes.string.isRequired,
-//     nameRU: PropTypes.string.isRequired,
-//     owner: PropTypes.string.isRequired,
-//     thumbnail: PropTypes.string.isRequired,
-//     trailerLink: PropTypes.string.isRequired,
-//     year: PropTypes.string.isRequired,
-//     __v: PropTypes.number.isRequired,
-//     _id: PropTypes.string.isRequired,
-//   }),
-// )

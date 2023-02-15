@@ -4,11 +4,11 @@ import { action } from '@storybook/addon-actions';
 
 import { useForm } from '../../../hooks';
 import { Logo } from '../../Logo';
-import { Login } from '../Login';
+import { Register } from '../Register';
 
 export default {
-  title: 'Example/Login',
-  component: Login,
+  title: 'Example/Register',
+  component: Register,
   argTypes: {
     onClickForNavigate: { action: 'clicked' },
   },
@@ -17,7 +17,7 @@ export default {
 const Template = args => {
   const { values, errors, handleChange } = useForm({});
   return (
-    <Login
+    <Register
       {...args}
       values={values}
       errors={errors}
@@ -45,6 +45,6 @@ Primary.args = {
       }}
     />
   ),
-  isLoginProcess: false,
+  isRegisterProcess: false,
   isDisabled: false,
 };

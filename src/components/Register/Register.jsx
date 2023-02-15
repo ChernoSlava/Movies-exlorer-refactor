@@ -25,7 +25,7 @@ export function Register({
   isRegisterProcess,
   values,
   isDisabled,
-  loginUrl,
+  onClickForNavigate,
 }) {
   return (
     <RegisterStyled>
@@ -99,7 +99,9 @@ export function Register({
           </RegisterButton>
           <RegisterLinkText>
             Уже зарегистрированы?
-            <RegisterLink to={loginUrl}>Взойти на борт</RegisterLink>
+            <RegisterLink role="button" onClick={onClickForNavigate}>
+              Взойти на борт
+            </RegisterLink>
           </RegisterLinkText>
         </RegisterButtonsContainer>
       </RegisterForm>
@@ -123,7 +125,7 @@ Register.propTypes = {
   handleChange: PropTypes.func.isRequired,
   isRegisterProcess: PropTypes.bool.isRequired,
   isDisabled: PropTypes.bool.isRequired,
-  loginUrl: PropTypes.string.isRequired,
+  onClickForNavigate: PropTypes.func.isRequired,
 };
 Register.defaultProps = {
   errors: {},

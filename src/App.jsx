@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { Loader } from './components/Preloader';
-import { AppLayout, Main, ProtectedRoute } from './components';
+import { AppLayout, Main, Popup, ProtectedRoute } from './components';
 import { ROUTER_PATH } from './constants';
 import {
   ErrorPageContainer,
@@ -200,10 +200,6 @@ export function App() {
       onRegistration: handleRegistration,
       onSignOut: handleSignOut,
       onChangeProfile: handleChangeProfile,
-      isOpen: popupIsOpen,
-      onClose: handleClosePopup,
-      isSuccess,
-      text,
     }),
     [
       loggedIn,
@@ -213,10 +209,6 @@ export function App() {
       handleRegistration,
       handleChangeProfile,
       handleSignOut,
-      popupIsOpen,
-      handleClosePopup,
-      isSuccess,
-      text,
     ],
   );
 
@@ -228,7 +220,18 @@ export function App() {
         <CurrentUserContext.Provider value={user}>
           <AuthContext.Provider value={authContextValue}>
             <Routes>
-              <Route path={ROUTER_PATH.MAIN} element={<AppLayout />}>
+              <Route
+                path={ROUTER_PATH.MAIN}
+                element={
+                  <AppLayout>
+                    <Popup
+                      isOpen={popupIsOpen}
+                      onClose={handleClosePopup}
+                      isSuccess={isSuccess}
+                      text={text}
+                    />
+                  </AppLayout>
+                }>
                 <Route index element={<Main header={<HeaderContainer />} />} />
                 <Route path={ROUTER_PATH.LOGIN} element={<LoginContainer />} />
                 <Route

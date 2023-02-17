@@ -1,23 +1,32 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer } from '../../components';
-import { CurrentUserContext } from '../../contexts';
+import { CurrentUserContext, SearchFormContext } from '../../contexts';
+import { transformDuration } from '../../utils';
 import { HeaderContainer } from '../HeaderContainer';
-import { MoviesCardList } from '../Movies/MoviesCardList';
-import { SearchForm } from '../Movies/SearchForm';
+import { SearchFormContainer } from '../Movies';
+import { MoviesCardListContainer } from '../Movies/MoviesCardListContainer';
 
 import { SavedMoviesStyled } from './styled';
 
+function transformMovies(movies) {
+  return movies.map(movie => ({
+    ...movie,
+    durationText: transformDuration(movie.duration),
+    isLiked: true,
+  }));
+}
 export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
   const { email } = useContext(CurrentUserContext);
 
   const [shortMovies, setShortMovies] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [showedMovies, setShowedMovies] = useState(savedMoviesList);
+  const [showedMovies, setShowedMovies] = useState(
+    transformMovies(savedMoviesList),
+  );
   const [filteredMovies, setFilteredMovies] = useState(showedMovies);
-
-  const [isNothing, setIsNothing] = useState(false);
 
   function filterShortMovies(movies) {
     return movies.filter(movie => movie.duration < 40);
@@ -42,11 +51,6 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
     localStorage.setItem(`${email} - movieSearchSaved`, inputValue);
     let moviesList = filterMovies(savedMoviesList, inputValue);
     moviesList = isShortMovies ? filterShortMovies(moviesList) : moviesList;
-    if (moviesList.length === 0) {
-      setIsNothing(true);
-    } else {
-      setIsNothing(false);
-    }
     setFilteredMovies(moviesList);
   }
 
@@ -59,8 +63,9 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
   };
 
   useEffect(() => {
-    setShowedMovies(savedMoviesList);
-    const items = filterMovies(savedMoviesList, searchQuery);
+    const result = transformMovies(savedMoviesList);
+    setShowedMovies(result);
+    const items = filterMovies(result, searchQuery);
     setFilteredMovies(shortMovies ? filterShortMovies(items) : items);
   }, [savedMoviesList]);
 
@@ -68,16 +73,17 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
     <>
       <HeaderContainer />
       <SavedMoviesStyled>
-        <SearchForm
-          onSubmit={value => handleSearchSubmit(value, shortMovies)}
-          handleShortMovies={handleShortMovies}
-          shortMovies={shortMovies}
-        />
-        <MoviesCardList
+        <SearchFormContext.Provider
+          value={{
+            onSearch: value => handleSearchSubmit(value, shortMovies),
+            handleShortMovies,
+            isShortMovies: shortMovies,
+          }}>
+          <SearchFormContainer />
+        </SearchFormContext.Provider>
+        <MoviesCardListContainer
           onDeleteFilm={onDeleteFilm}
-          savedMoviesList={savedMoviesList}
-          moviesForShow={filteredMovies}
-          isNothing={isNothing}
+          items={filteredMovies}
         />
       </SavedMoviesStyled>
       <Footer />

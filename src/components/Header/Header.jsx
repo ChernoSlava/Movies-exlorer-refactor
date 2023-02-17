@@ -7,5 +7,8 @@ export function Header({ children }) {
   return <HeaderStyled>{children}</HeaderStyled>;
 }
 Header.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.object,
+  ]).isRequired,
 };

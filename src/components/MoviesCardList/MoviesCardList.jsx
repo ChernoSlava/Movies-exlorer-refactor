@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import PropTypes, { objectOf } from 'prop-types';
 
-import {
-  ADD_CARDS,
-  FEATURED_CARDS,
-  ROUTER_PATH,
-  SCREEN_SIZE,
-} from '../../../constants';
 import { MoviesCard } from '../MoviesCard';
 
+import { ADD_CARDS, FEATURED_CARDS, SCREEN_SIZE } from './constants';
 import {
   MoviesCardButton,
   MoviesCardListElement,
@@ -17,31 +11,15 @@ import {
   MoviesCardListStyled,
 } from './styled';
 
-export function MoviesCardList({
-  onSaveFilm,
-  onDeleteFilm,
-  savedMoviesList,
-  moviesForShow,
-  isNothing,
-}) {
-  const location = useLocation();
-
+export function MoviesCardList({ onSaveFilm, onDeleteFilm, items, canPaged }) {
   const [currentPage, setNextPage] = useState(0);
   const [sizeScreen, setSizeSreen] = useState({ width: window.innerWidth });
   const [pageSize, setPageSize] = useState(0);
 
-  const isNothingText = isNothing && (
+  const isNothingText = items.length === 0 && (
     <MoviesCardListNothing>Ничего не найдено</MoviesCardListNothing>
   );
-  const isMoviesLocation = location.pathname === ROUTER_PATH.MOVIES;
-  const isMovies =
-    isMoviesLocation && moviesForShow.length > currentPage + pageSize;
 
-  function getSavedMovieCard(arr, movie) {
-    return arr.find(item => {
-      return item.movieId === (movie.id || movie.movieId);
-    });
-  }
   const takeWidthScreen = () => {
     setSizeSreen({
       width: window.innerWidth,
@@ -71,20 +49,18 @@ export function MoviesCardList({
     <MoviesCardListStyled>
       {isNothingText}
       <MoviesCardListElement>
-        {(isMoviesLocation
-          ? moviesForShow.slice(0, pageSize + currentPage)
-          : moviesForShow
-        ).map(movie => (
-          <MoviesCard
-            key={movie.id || movie._id}
-            onDeleteFilm={onDeleteFilm}
-            onSaveFilm={onSaveFilm}
-            saved={getSavedMovieCard(savedMoviesList, movie)}
-            movie={movie}
-          />
-        ))}
+        {(canPaged ? items.slice(0, pageSize + currentPage) : items).map(
+          movie => (
+            <MoviesCard
+              key={movie.id || movie._id}
+              onDeleteFilm={onDeleteFilm}
+              onSaveFilm={onSaveFilm}
+              movie={movie}
+            />
+          ),
+        )}
       </MoviesCardListElement>
-      {isMovies ? (
+      {canPaged ? (
         <MoviesCardButton
           type="button"
           onClick={() => {
@@ -101,11 +77,10 @@ export function MoviesCardList({
   );
 }
 MoviesCardList.propTypes = {
-  isNothing: PropTypes.bool.isRequired,
   onSaveFilm: PropTypes.func,
   onDeleteFilm: PropTypes.func.isRequired,
-  savedMoviesList: PropTypes.arrayOf(objectOf).isRequired,
-  moviesForShow: PropTypes.arrayOf(objectOf).isRequired,
+  items: PropTypes.arrayOf(objectOf).isRequired,
+  canPaged: PropTypes.bool.isRequired,
 };
 MoviesCardList.defaultProps = {
   onSaveFilm: PropTypes.func,

@@ -1,15 +1,16 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer } from '../../components';
 import { Loader } from '../../components/Preloader';
 import { SHORT_DURATION } from '../../constants';
-import { CurrentUserContext } from '../../contexts';
-import { moviesApi } from '../../utils';
+import { CurrentUserContext, SearchFormContext } from '../../contexts';
+import { moviesApi, transformDuration } from '../../utils';
 import { HeaderContainer } from '../HeaderContainer';
 
-import { MoviesCardList } from './MoviesCardList';
-import { SearchForm } from './SearchForm';
+import { MoviesCardListContainer } from './MoviesCardListContainer';
+import { SearchFormContainer } from './SearchFormContainer';
 import { MoviesStyled } from './styled';
 
 export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
@@ -18,8 +19,6 @@ export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
   const [moviesFromSearch, setMoviesFromSearch] = useState([]);
   const [shortMovies, setShortMovies] = useState(false);
   const [filteredMovies, setFilteredMovies] = useState([]);
-
-  const [isNothing, setIsNothing] = useState(false);
 
   function filterShortMovies(movies) {
     return movies.filter(movie => movie.duration < SHORT_DURATION);
@@ -48,17 +47,16 @@ export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
       country: !movie.country ? 'Russia' : movie.country,
       nameEN: !movie.nameEN ? movie.nameRU : movie.nameEN,
       nameRU: !movie.nameRU ? movie.nameEN : movie.nameRU,
+      durationText: transformDuration(movie.duration),
+      isLiked: savedMoviesList.find(item => {
+        return item.movieId === (movie.id || movie.movieId);
+      }),
+      buttonType: 'like',
     }));
   }
 
   function handleAnswerMovies(movies, searchData, checkbox) {
     const moviesBlock = filterMovies(movies, searchData);
-    if (moviesBlock.length === 0) {
-      setIsNothing(true);
-    } else {
-      setIsNothing(false);
-    }
-
     setMoviesFromSearch(moviesBlock);
     setFilteredMovies(checkbox ? filterShortMovies(moviesBlock) : moviesBlock);
   }
@@ -122,24 +120,25 @@ export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
         isShortMovies,
       );
     }
-  }, []);
+  }, [savedMoviesList]);
 
   return (
     <>
       {isLoading && <Loader />}
       <HeaderContainer />
       <MoviesStyled>
-        <SearchForm
-          onSubmit={value => handleSearch(value, shortMovies)}
-          handleShortMovies={handleShortMovies}
-          shortMovies={shortMovies}
-        />
-        <MoviesCardList
+        <SearchFormContext.Provider
+          value={{
+            onSearch: value => handleSearch(value, shortMovies),
+            handleShortMovies,
+            isShortMovies: shortMovies,
+          }}>
+          <SearchFormContainer />
+        </SearchFormContext.Provider>
+        <MoviesCardListContainer
           onSaveFilm={onSaveFilm}
           onDeleteFilm={onDeleteFilm}
-          savedMoviesList={savedMoviesList}
-          moviesForShow={filteredMovies}
-          isNothing={isNothing}
+          items={filteredMovies}
         />
       </MoviesStyled>
       <Footer />

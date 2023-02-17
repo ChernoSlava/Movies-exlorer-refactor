@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import find from '../../../images/Find.svg';
+import find from './images/Find.svg';
 
 export const SearchFormStyled = styled.div`
   margin: 0;

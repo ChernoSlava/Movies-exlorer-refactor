@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
 
-import delet from '../../../images/delete_film.svg';
-import save from '../../../images/Save.svg';
-import saved from '../../../images/Saved.svg';
+import delet from './images/delete_film.svg';
+import save from './images/Save.svg';
+import saved from './images/Saved.svg';
 
 export const MoviesCardStyled = styled.li`
   max-width: 364px;

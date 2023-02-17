@@ -1,8 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import { ROUTER_PATH } from '../../../constants';
 
 import {
   MoviesCardButton,
@@ -15,9 +12,7 @@ import {
   MoviesCardTrailer,
 } from './styled';
 
-export function MoviesCard({ movie, saved, onSaveFilm, onDeleteFilm }) {
-  const location = useLocation();
-
+export function MoviesCard({ movie, onSaveFilm, onDeleteFilm }) {
   const handleLike = () => {
     onSaveFilm(movie);
   };
@@ -25,15 +20,6 @@ export function MoviesCard({ movie, saved, onSaveFilm, onDeleteFilm }) {
   const handleDelete = () => {
     onDeleteFilm(movie);
   };
-
-  function transformDuration(duration) {
-    const hours = Math.trunc(duration / 60);
-    const minutes = duration % 60;
-    if (hours === 0) {
-      return `${minutes}м`;
-    }
-    return `${hours}ч ${minutes}м`;
-  }
 
   return (
     <MoviesCardStyled>
@@ -46,17 +32,16 @@ export function MoviesCard({ movie, saved, onSaveFilm, onDeleteFilm }) {
       <MoviesCardInfo>
         <MoviesCardTextContainer>
           <MoviesCardTitle>{movie.nameRU}</MoviesCardTitle>
-          <MoviesCardTime>{transformDuration(movie.duration)}</MoviesCardTime>
+          <MoviesCardTime>{movie.durationText}</MoviesCardTime>
         </MoviesCardTextContainer>
-        {location.pathname === ROUTER_PATH.MOVIES && (
+        {movie.buttonType === 'like' ? (
           <MoviesCardButton
             type="button"
             aria-label="like"
-            onClick={saved ? handleDelete : handleLike}
-            save={saved}
+            onClick={movie.isLiked ? handleDelete : handleLike}
+            save={movie.isLiked}
           />
-        )}
-        {location.pathname === ROUTER_PATH.SAVED_MOVIES && (
+        ) : (
           <MoviesCardButton
             type="button"
             aria-label="dislike"
@@ -71,11 +56,9 @@ export function MoviesCard({ movie, saved, onSaveFilm, onDeleteFilm }) {
 
 MoviesCard.propTypes = {
   movie: PropTypes.object.isRequired,
-  saved: PropTypes.object,
   onSaveFilm: PropTypes.func,
   onDeleteFilm: PropTypes.func.isRequired,
 };
 MoviesCard.defaultProps = {
   onSaveFilm: () => {},
-  saved: undefined,
 };

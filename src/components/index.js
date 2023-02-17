@@ -10,3 +10,6 @@ export { Register } from './Register';
 export { Loader } from './Preloader';
 export { Profile } from './Profile';
 export { Popup } from './Popup';
+export { SearchForm } from './SearchForm';
+export { MoviesCard } from './MoviesCard';
+export { MoviesCardList } from './MoviesCardList';

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
-import icoClose from '../../images/Close-Icon.svg';
-import icoCloseMini from '../../images/Close-Icon-mini.svg';
+import icoClose from './images/Close-Icon.svg';
+import icoCloseMini from './images/Close-Icon-mini.svg';
 
 export const PopupStyled = styled.div`
   width: 100%;

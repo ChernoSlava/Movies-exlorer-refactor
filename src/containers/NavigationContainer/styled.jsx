@@ -1,28 +1,18 @@
 import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import burgerBtn from '../../images/burger-menu.svg';
-import closeBtn from '../../images/CloseIcon.svg';
+import burgerBtn from './images/burger-menu.svg';
+import closeBtn from './images/CloseIcon.svg';
 
 export const NavigationStyled = styled.nav`
   display: flex;
 `;
-export const NavigationNone = styled.ul`
+export const NavigationDesktopView = styled.div`
   margin: 0;
   align-self: center;
 
   @media screen and (max-width: 768px) {
     display: none;
-  }
-`;
-export const NavbarContainer = styled('nav')`
-  width: 100%;
-  height: ${props => (props.extend ? '100vh' : '60px')};
-  background-color: purple;
-  display: flex;
-  flex-direction: column;
-  @media (min-width: 700px) {
-    height: 60px;
   }
 `;
 export const NavigationLink = styled(Link)`
@@ -82,28 +72,18 @@ export const NavigationLink = styled(Link)`
         align-items: center;
     `}
 `;
-export const NavigationList = styled.ul`
+export const NavigationList = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0;
   margin: 0;
-  list-style: none;
   padding-left: 50px;
 `;
 
-export const NavigationLinkIco = styled.img`
+export const NavigationProfileIcon = styled.img`
   margin-left: 13px;
-`;
-
-export const NavigationListNone = styled.li`
-  margin: 0;
-  align-self: center;
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
 `;
 
 export const NavigationBurgerButton = styled.button`
@@ -145,22 +125,23 @@ export const NavigationSidebar = styled.div`
     visibility: hidden;
 
     ${props =>
-      props.active &&
+      props.isShow
+        ? `
+          visibility: visible;
+          top: 0;
+          left: 20%;
+          opacity: 1;
       `
-        visibility: visible;
-        top: 0;
-        left: 20%;
-        opacity: 1;
-      `}
+        : ''}
   }
   @media screen and (max-width: 450) {
     width: 100vw;
 
     ${props =>
-      props.active &&
+      props.isShow &&
       `
-              left: 0;
-          `}
+          left: 0;
+      `}
   }
 `;
 

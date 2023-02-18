@@ -13,3 +13,4 @@ export { Popup } from './Popup';
 export { SearchForm } from './SearchForm';
 export { MoviesCard } from './MoviesCard';
 export { MoviesCardList } from './MoviesCardList';
+export { Navigation } from './Navigation';

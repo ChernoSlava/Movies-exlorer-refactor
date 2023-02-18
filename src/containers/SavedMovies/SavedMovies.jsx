@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer } from '../../components';
@@ -69,16 +69,20 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
     setFilteredMovies(shortMovies ? filterShortMovies(items) : items);
   }, [savedMoviesList]);
 
+  const SearchFormContextValue = useMemo(
+    () => ({
+      handleShortMovies,
+      isShortMovies: shortMovies,
+      onSearch: value => handleSearchSubmit(value, shortMovies),
+    }),
+    [handleShortMovies, shortMovies, handleSearchSubmit],
+  );
+
   return (
     <>
       <HeaderContainer />
       <SavedMoviesStyled>
-        <SearchFormContext.Provider
-          value={{
-            onSearch: value => handleSearchSubmit(value, shortMovies),
-            handleShortMovies,
-            isShortMovies: shortMovies,
-          }}>
+        <SearchFormContext.Provider value={SearchFormContextValue}>
           <SearchFormContainer />
         </SearchFormContext.Provider>
         <MoviesCardListContainer

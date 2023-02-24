@@ -1,4 +1,3 @@
-import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 import burgerBtn from './images/burger-menu.svg';
@@ -15,7 +14,17 @@ export const NavigationDesktopView = styled.div`
     display: none;
   }
 `;
-export const NavigationLink = styled(Link)`
+export const NavigationLink = styled.span`
+  > a {
+    text-decoration: none;
+    color: ${props => props.theme.colors.white10};
+
+    ${props =>
+      props.$btn &&
+      `
+          color: ${props.theme.colors.black30};
+      `}
+  }
   padding: 0;
   margin: 0;
   cursor: pointer;
@@ -127,11 +136,11 @@ export const NavigationSidebar = styled.div`
     ${props =>
       props.isShow
         ? `
-          visibility: visible;
-          top: 0;
-          left: 20%;
-          opacity: 1;
-      `
+              visibility: visible;
+              top: 0;
+              left: 20%;
+              opacity: 1;
+          `
         : ''}
   }
   @media screen and (max-width: 450) {
@@ -140,8 +149,8 @@ export const NavigationSidebar = styled.div`
     ${props =>
       props.isShow &&
       `
-          left: 0;
-      `}
+                left: 0;
+          `}
   }
 `;
 
@@ -189,21 +198,27 @@ export const NavigationSidebarItem = styled.li`
   list-style-type: none;
 `;
 
-export const NavigationSidebarNavLink = styled(NavLink)`
-  text-decoration: none;
-  color: ${props => props.theme.colors.white10};
+export const NavigationSidebarNavLink = styled.span`
+  > a {
+    text-decoration: none;
+    color: ${props => props.theme.colors.white10};
 
-  ${props =>
-    props.$active &&
-    `
-        border-bottom: 2px solid #FFFFFF;
-        height: 26px;
-    `}
+    ${props =>
+      props.$active &&
+      `
+          border-bottom: 2px solid #FFFFFF;
+          height: 26px;
+      `}
+  }
 `;
 export const NavigationSidebarProfile = styled.div`
   padding-bottom: 92px;
 `;
-export const NavigationSidebarLink = styled(Link)`
+export const NavigationSidebarLink = styled.span`
+  > a {
+    text-decoration: none;
+    color: ${props => props.theme.colors.white10};
+  }
   text-decoration: none;
   color: ${props => props.theme.colors.white10};
   align-items: center;

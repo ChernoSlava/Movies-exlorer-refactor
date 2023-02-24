@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
-import { NAVIGATION } from '../../constants';
-
-// import account from './images/Account.svg';
+import { NAVIGATION } from './constants';
+import * as Images from './images';
 import {
   NavigationBurgerButton,
   NavigationCloseButton,
   NavigationDesktopView,
   NavigationLink,
   NavigationList,
-  // NavigationProfileIcon,
+  NavigationProfileIcon,
   NavigationSidebar,
   NavigationSidebarContainer,
   NavigationSidebarContent,
@@ -27,24 +26,23 @@ export function Navigation({
   sidebarItems,
   desktopItems,
   list,
+  link,
+  navLink,
 }) {
   const [isSidebarOpen, setSidebarOpenState] = useState(false);
 
   const handleToggleSidebar = () => {
     setSidebarOpenState(!isSidebarOpen);
   };
-
+  const Link = link;
+  const NavLink = navLink;
   return (
     <NavigationStyled>
       <NavigationDesktopView>
         <>
           {desktopItems.map((x, i) => (
-            <NavigationLink
-              key={x.url}
-              to={x.url}
-              $first={i === 0}
-              $active={x.isActive}>
-              {x.title}
+            <NavigationLink key={x.url} $first={i === 0} $active={x.isActive}>
+              <Link to={x.url}>{x.title}</Link>
             </NavigationLink>
           ))}
         </>
@@ -54,33 +52,23 @@ export function Navigation({
           {list
             .filter(x => x.type === 'any' && x.isShow)
             .map(x => (
-              <NavigationLink
-                key={x.url}
-                to={x.url}
-                $mini={x.isMini}
-                $btn={x.isButton}>
-                {x.title}
+              <NavigationLink key={x.url} $mini={x.isMini} $btn={x.isButton}>
+                <Link to={x.url}>{x.title}</Link>
               </NavigationLink>
             ))}
         </>
-        {
-          <NavigationDesktopView>
-            {list
-              .filter(x => x.type === 'desktop' && x.isShow)
-              .map(x => (
-                <NavigationLink key={x.url} to={x.url} $profile={x.isProfile}>
-                  {x.title}
-                </NavigationLink>
-              ))}
-            {/* <NavigationLink to={ROUTER_PATH.PROFILE} $profile>
-              Аккаунт
-              <NavigationProfileIcon
-                src={account}
-                alt={NAVIGATION.ICO_ACCOUNT_ALT}
-              />
-            </NavigationLink> */}
-          </NavigationDesktopView>
-        }
+        <NavigationDesktopView>
+          {list
+            .filter(x => x.type === 'desktop' && x.isShow)
+            .map(x => (
+              <NavigationLink key={x.url} $profile={x.isProfile}>
+                <Link to={x.url}>{x.title}</Link>
+                {Images[x.icon] && (
+                  <NavigationProfileIcon src={Images[x.icon]} alt={x.iconAlt} />
+                )}
+              </NavigationLink>
+            ))}
+        </NavigationDesktopView>
       </NavigationList>
       {isShowBurgerMenu && (
         <NavigationBurgerButton
@@ -95,28 +83,27 @@ export function Navigation({
             <NavigationCloseButton onClick={handleToggleSidebar} />
             <NavigationSidebarContent>
               {sidebarItems
-                .filter(x => x.isTop)
+                .filter(x => x.position === 'top')
                 .map(x => (
                   <NavigationSidebarItem key={x.url}>
-                    <NavigationSidebarNavLink
-                      to={x.url}
-                      $active={x.isActive}
-                      $isTop>
-                      {x.title}
+                    <NavigationSidebarNavLink $active={x.isActive} $isTop>
+                      <NavLink to={x.url}>{x.title}</NavLink>
                     </NavigationSidebarNavLink>
                   </NavigationSidebarItem>
                 ))}
             </NavigationSidebarContent>
             <NavigationSidebarProfile>
               {sidebarItems
-                .filter(x => x.isBottom)
+                .filter(x => x.position === 'bottom')
                 .map(x => (
-                  <NavigationSidebarLink to={x.url} key={x.url} $isBottom>
-                    {x.title}
-                    {/* <NavigationProfileIcon
-                  src={account}
-                  alt={NAVIGATION.ICO_ACCOUNT_ALT}
-                /> */}
+                  <NavigationSidebarLink key={x.url} $isBottom>
+                    <Link to={x.url}>{x.title}</Link>
+                    {Images[x.icon] && (
+                      <NavigationProfileIcon
+                        src={Images[x.icon]}
+                        alt={x.iconAlt}
+                      />
+                    )}
                   </NavigationSidebarLink>
                 ))}
             </NavigationSidebarProfile>
@@ -133,29 +120,6 @@ Navigation.propTypes = {
   sidebarItems: PropTypes.arrayOf(objectOf).isRequired,
   desktopItems: PropTypes.arrayOf(objectOf).isRequired,
   list: PropTypes.arrayOf(objectOf).isRequired,
-  // sidebarItems: PropTypes.shape({
-  //   url: PropTypes.string.isRequired,
-  //   isActive: PropTypes.bool.isRequired,
-  //   title: PropTypes.string.isRequired,
-  //   isTop: PropTypes.bool,
-  //   isBottom: PropTypes.bool,
-  //   filter: PropTypes.func.isRequired,
-  //   map: PropTypes.func.isRequired,
-  // }).isRequired,
-  // desktopItems: PropTypes.shape({
-  //   url: PropTypes.string.isRequired,
-  //   isActive: PropTypes.bool.isRequired,
-  //   title: PropTypes.string.isRequired,
-  //   map: PropTypes.func.isRequired,
-  // }).isRequired,
-  // list: PropTypes.shape({
-  //   url: PropTypes.string.isRequired,
-  //   isShow: PropTypes.bool.isRequired,
-  //   type: PropTypes.string.isRequired,
-  //   isMini: PropTypes.bool,
-  //   isButton: PropTypes.bool,
-  //   isProfile: PropTypes.bool,
-  //   filter: PropTypes.func.isRequired,
-  //   map: PropTypes.func.isRequired,
-  // }).isRequired,
+  navLink: PropTypes.object.isRequired,
+  link: PropTypes.object.isRequired,
 };

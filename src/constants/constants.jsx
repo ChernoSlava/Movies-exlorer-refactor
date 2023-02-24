@@ -15,8 +15,6 @@ export const LOGO = {
 
 export const NAVIGATION = {
   ICO_ACCOUNT_ALT: 'Иконка аккаунта',
-  ARIA_LABEL_BTN_BURGER: 'Кнопка меню',
-  BURGER_BTN_TYPE: 'button',
 };
 
 export const LINK = {

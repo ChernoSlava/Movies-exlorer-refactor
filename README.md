@@ -18,6 +18,7 @@
 - MongoDB, 
 - Express js, 
 - JavaScript: React,
+- Storybook,
 - Styled Components,
 - ESLint;
 ---

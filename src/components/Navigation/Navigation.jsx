@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
@@ -120,6 +121,6 @@ Navigation.propTypes = {
   sidebarItems: PropTypes.arrayOf(objectOf).isRequired,
   desktopItems: PropTypes.arrayOf(objectOf).isRequired,
   list: PropTypes.arrayOf(objectOf).isRequired,
-  navLink: PropTypes.object.isRequired,
-  link: PropTypes.object.isRequired,
+  navLink: PropTypes.object,
+  link: PropTypes.object,
 };

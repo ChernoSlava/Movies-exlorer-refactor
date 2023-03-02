@@ -1,15 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 import { ErrorPageBtn, ErrorPageStyled } from './styled';
 
-export function ErrorPage() {
-  const navigate = useNavigate();
-  const back = () => navigate(-1);
-
+export function ErrorPage({ onClick }) {
   return (
     <ErrorPageStyled>
-      <ErrorPageBtn onClick={back}>⚠ БЕГИИИИ!!! ⚠</ErrorPageBtn>
+      <ErrorPageBtn type="button" onClick={onClick}>
+        ⚠ БЕГИИИИ!!! ⚠
+      </ErrorPageBtn>
     </ErrorPageStyled>
   );
 }
+ErrorPage.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};

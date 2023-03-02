@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled, { css, keyframes } from 'styled-components/macro';
 
 export const RegisterStyled = styled.section`
@@ -172,7 +171,7 @@ export const RegisterButton = styled.button`
     `}
 `;
 
-export const RegisterLinkText = styled.p`
+export const RegisterLinkText = styled.div`
   margin: 0;
   padding: 0;
   padding-top: 16px;
@@ -184,8 +183,13 @@ export const RegisterLinkText = styled.p`
   line-height: 17px;
   text-align: center;
   color: ${props => props.theme.colors.grey10};
+  align-self: center;
+  display: flex;
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+  }
 `;
-export const RegisterLink = styled(Link)`
+export const RegisterLink = styled.nav`
   margin: 0;
   padding: 0;
   padding-left: 6px;
@@ -197,4 +201,6 @@ export const RegisterLink = styled(Link)`
   text-align: center;
   color: ${props => props.theme.colors.blue10};
   text-decoration: none;
+  text-decoration: none;
+  cursor: pointer;
 `;

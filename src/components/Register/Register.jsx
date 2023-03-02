@@ -1,10 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-import { ROUTER_PATH } from '../../constants';
-import { useForm } from '../../hooks';
-import { Logo } from '../Logo';
 
 import {
   RegisterButton,
@@ -22,50 +17,30 @@ import {
   RegisterTitle,
 } from './styled';
 
-export function Register({ onRegistration, loggedIn, isInquiry }) {
-  const navigation = useNavigate();
-
-  const { values, handleChange, resetForm, errors } = useForm({});
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    onRegistration(values);
-  };
-
-  useEffect(() => {
-    resetForm();
-  }, [resetForm, isInquiry]);
-
-  const isErrorSpanName = errors.name;
-  const isErrorSpanEmail = errors.email;
-  const isErrorSpanPassw = errors.password;
-
-  const isErrorInputName = errors.name;
-  const isErrorInputEmail = errors.email;
-  const isErrorInputPassw = errors.password;
-
-  const isErrors = errors.name || errors.email || errors.password;
-  const isEmptyValues = !values.name || !values.password || !values.email;
-  const isDisabled = isErrors || isEmptyValues || isInquiry;
-
-  return loggedIn ? (
-    navigation(ROUTER_PATH.MAIN)
-  ) : (
+export function Register({
+  logo,
+  handleSubmit,
+  errors,
+  handleChange,
+  isRegisterProcess,
+  values,
+  isDisabled,
+  onClickForNavigate,
+}) {
+  return (
     <RegisterStyled>
       <RegisterForm onSubmit={handleSubmit} noValidate>
-        <RegisterLogo>
-          <Logo />
-        </RegisterLogo>
+        <RegisterLogo>{logo}</RegisterLogo>
         <RegisterTitle>Добро пожаловать!</RegisterTitle>
         <RegisterFieldset>
           <RegisterLabel htmlFor="name">
-            <RegisterFieldError isError={isErrorSpanName}>
+            <RegisterFieldError isError={errors.name}>
               {errors.name}
             </RegisterFieldError>
             <RegisterField>Имя</RegisterField>
             <RegisterInput
-              isErr={isErrorInputName}
-              isInquiry={isInquiry}
+              isErr={errors.name}
+              isInquiry={isRegisterProcess}
               name="name"
               placeholder="Ваше имя"
               minLength={2}
@@ -74,35 +49,35 @@ export function Register({ onRegistration, loggedIn, isInquiry }) {
               required
               onChange={handleChange}
               value={values.name || ''}
-              disabled={isInquiry}
+              disabled={isRegisterProcess}
             />
           </RegisterLabel>
           <RegisterLabel htmlFor="email">
-            <RegisterFieldError isError={isErrorSpanEmail}>
+            <RegisterFieldError isError={errors.email}>
               {errors.email}
             </RegisterFieldError>
             <RegisterField>Космо почта</RegisterField>
             <RegisterInput
-              isErr={isErrorInputEmail}
-              isInquiry={isInquiry}
+              isErr={errors.email}
+              isInquiry={isRegisterProcess}
               name="email"
               placeholder="star@mail.ru"
               type="email"
               required
               onChange={handleChange}
               value={values.email || ''}
-              disabled={isInquiry}
+              disabled={isRegisterProcess}
               autoComplete="email"
             />
           </RegisterLabel>
           <RegisterLabel htmlFor="password">
-            <RegisterFieldError isError={isErrorSpanPassw}>
+            <RegisterFieldError isError={errors.password}>
               {errors.password}
             </RegisterFieldError>
             <RegisterField>Космо пароль</RegisterField>
             <RegisterInput
-              isErr={isErrorInputPassw}
-              isInquiry={isInquiry}
+              isErr={errors.password}
+              isInquiry={isRegisterProcess}
               name="password"
               placeholder="Пароль"
               minLength={6}
@@ -110,7 +85,7 @@ export function Register({ onRegistration, loggedIn, isInquiry }) {
               required
               onChange={handleChange}
               value={values.password || ''}
-              disabled={isInquiry}
+              disabled={isRegisterProcess}
               autoComplete="new-password"
             />
           </RegisterLabel>
@@ -124,7 +99,9 @@ export function Register({ onRegistration, loggedIn, isInquiry }) {
           </RegisterButton>
           <RegisterLinkText>
             Уже зарегистрированы?
-            <RegisterLink to={ROUTER_PATH.LOGIN}>Взойти на борт</RegisterLink>
+            <RegisterLink role="button" onClick={onClickForNavigate}>
+              Взойти на борт
+            </RegisterLink>
           </RegisterLinkText>
         </RegisterButtonsContainer>
       </RegisterForm>
@@ -133,7 +110,24 @@ export function Register({ onRegistration, loggedIn, isInquiry }) {
 }
 
 Register.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  onRegistration: PropTypes.func.isRequired,
-  isInquiry: PropTypes.bool.isRequired,
+  errors: PropTypes.shape({
+    name: PropTypes.string,
+    password: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  values: PropTypes.shape({
+    name: PropTypes.string,
+    password: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  logo: PropTypes.element.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  isRegisterProcess: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  onClickForNavigate: PropTypes.func.isRequired,
+};
+Register.defaultProps = {
+  errors: {},
+  values: {},
 };

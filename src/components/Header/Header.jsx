@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Logo } from '../Logo';
-import { Navigation } from '../Navigation';
-
 import { HeaderStyled } from './styled';
 
-export function Header({ loggedIn }) {
-  return (
-    <HeaderStyled>
-      <Logo />
-      <Navigation loggedIn={loggedIn} />
-    </HeaderStyled>
-  );
+export function Header({ children }) {
+  return <HeaderStyled>{children}</HeaderStyled>;
 }
 Header.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.object,
+  ]).isRequired,
 };

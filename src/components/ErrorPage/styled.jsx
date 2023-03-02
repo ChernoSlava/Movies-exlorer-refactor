@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components/macro';
 
-import alien from '../../images/ErrorPage-min.jpg';
+import alien from './images/ErrorPage-min.jpg';
 
 export const ErrorPageStyled = styled.div`
   margin: 0;

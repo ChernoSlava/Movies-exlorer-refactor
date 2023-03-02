@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import notSuccessIco from "../../images/InfoPopupDon'tWork.svg";
-import successIco from '../../images/InfoPopupWork.svg';
-
+import notSuccessIco from './images/Failed.svg';
+import successIco from './images/Success.svg';
 import {
   PopupCloseButton,
   PopupContainer,

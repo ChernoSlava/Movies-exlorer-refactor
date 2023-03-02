@@ -1,67 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 
-import { ROUTER_PATH } from '../../constants';
-import { useForm } from '../../hooks';
-import sauron from '../../sound/sauron.mp3';
-import { Logo } from '../Logo';
-
+import sauron from './assets/sauron.mp3';
 import {
   LoginButtonContainer,
-  LoginCheckbox,
   LoginField,
   LoginFieldError,
   LoginFieldset,
   LoginForm,
   LoginInput,
   LoginLabel,
-  LoginLabelForCheckbox,
   LoginLink,
   LoginLinkText,
   LoginLogo,
   LoginStyled,
   LoginSubmitButton,
   LoginTitle,
+  TogglePasswordDisplay,
 } from './styled';
 
-export function Login({ onAuthorization, loggedIn, isInquiry }) {
-  const navigation = useNavigate();
+export function Login({
+  logo,
+  handleSubmit,
+  errors,
+  handleChange,
+  isLoginProcess,
+  values,
+  isDisabled,
+  onClickForNavigate,
+}) {
+  const [isPasswordShow, togglePasswordShow] = useState(false);
+  const [playShowPassword] = useSound(sauron, { volume: 0.1 });
 
-  const { values, handleChange, resetForm, errors } = useForm({});
-  const [checkboxActive, setCheckboxActive] = useState(false);
-
-  const [playShowPassword] = useSound(sauron, { volume: 0.25 });
-
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    onAuthorization(values);
-  };
-
-  const handleShowPassword = () => {
-    setCheckboxActive(!checkboxActive);
-    if (!checkboxActive) {
-      playShowPassword();
-    }
-  };
-
-  useEffect(() => {
-    resetForm();
-  }, [resetForm, isInquiry]);
-
-  const isErrors = errors.email || errors.password;
-  const isEmptyValues = !values.password || !values.email;
-  const isDisabled = isErrors || isEmptyValues || isInquiry;
-
-  return loggedIn ? (
-    navigation(ROUTER_PATH.MAIN)
-  ) : (
+  return (
     <LoginStyled>
       <LoginForm onSubmit={handleSubmit} noValidate>
-        <LoginLogo>
-          <Logo />
-        </LoginLogo>
+        <LoginLogo>{logo}</LoginLogo>
         <LoginTitle>Скорее на борт!</LoginTitle>
         <LoginFieldset>
           <LoginLabel htmlFor="email">
@@ -72,13 +47,13 @@ export function Login({ onAuthorization, loggedIn, isInquiry }) {
             <LoginInput
               onChange={handleChange}
               isError={errors.email}
-              isDisa={isInquiry}
+              isDisa={isLoginProcess}
               name="email"
               placeholder="star@mail.ru"
               type="email"
               required
               value={values.email || ''}
-              disabled={isInquiry}
+              disabled={isLoginProcess}
               autoComplete="email"
             />
           </LoginLabel>
@@ -90,26 +65,26 @@ export function Login({ onAuthorization, loggedIn, isInquiry }) {
             <LoginInput
               onChange={handleChange}
               isError={errors.password}
-              isDisa={isInquiry}
+              isDisa={isLoginProcess}
               name="password"
               placeholder="Пароль"
               minLength={6}
-              type={checkboxActive ? 'text' : 'password'}
+              type={isPasswordShow ? 'text' : 'password'}
               required
               value={values.password || ''}
-              disabled={isInquiry}
+              disabled={isLoginProcess}
               autoComplete="current-password"
             />
-            <LoginCheckbox
-              type="checkbox"
-              name="checkbox-log"
-              id="checkbox-log"
-              onChange={() => handleShowPassword()}
-              checked={checkboxActive}
-            />
-            <LoginLabelForCheckbox
-              active={checkboxActive}
-              htmlFor="checkbox-log"
+            <TogglePasswordDisplay
+              active={isPasswordShow}
+              onClick={() =>
+                togglePasswordShow(prev => {
+                  if (!prev) {
+                    playShowPassword();
+                  }
+                  return !prev;
+                })
+              }
             />
           </LoginLabel>
         </LoginFieldset>
@@ -122,7 +97,9 @@ export function Login({ onAuthorization, loggedIn, isInquiry }) {
           </LoginSubmitButton>
           <LoginLinkText>
             Ещё не зарегистрированы?
-            <LoginLink to={ROUTER_PATH.REGISTER}>Регистрация</LoginLink>
+            <LoginLink role="button" onClick={onClickForNavigate}>
+              Регистрация
+            </LoginLink>
           </LoginLinkText>
         </LoginButtonContainer>
       </LoginForm>
@@ -131,7 +108,22 @@ export function Login({ onAuthorization, loggedIn, isInquiry }) {
 }
 
 Login.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  isInquiry: PropTypes.bool.isRequired,
-  onAuthorization: PropTypes.func.isRequired,
+  errors: PropTypes.shape({
+    password: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  values: PropTypes.shape({
+    password: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  logo: PropTypes.element.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  isLoginProcess: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  onClickForNavigate: PropTypes.func.isRequired,
+};
+Login.defaultProps = {
+  errors: {},
+  values: {},
 };

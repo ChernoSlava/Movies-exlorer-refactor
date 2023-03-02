@@ -1,0 +1,1 @@
+export { MoviesCardListContainer } from './MoviesCardListContainer';

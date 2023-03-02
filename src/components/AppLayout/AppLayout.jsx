@@ -1,21 +1,24 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-
-import { Popup } from '../Popup';
+import PropTypes from 'prop-types';
 
 import { GlobalStyles } from './GlobalStyles';
 import { AppLayoutStyled } from './styled';
 
 import './AppLayout.css';
 
-export function AppLayout({ ...props }) {
+export function AppLayout({ children }) {
   return (
     <>
       <GlobalStyles />
       <AppLayoutStyled>
-        <Popup {...props} />
         <Outlet />
+        {children}
       </AppLayoutStyled>
     </>
   );
 }
+
+AppLayout.propTypes = {
+  children: PropTypes.element.isRequired,
+};

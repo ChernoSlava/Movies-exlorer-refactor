@@ -89,7 +89,7 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({
-  url: 'https://api.movies.chernoslava.nomoredomains.club',
+  url: 'http://localhost:3001',
   headers: {
     'content-type': 'application/json',
     Authorization: '',

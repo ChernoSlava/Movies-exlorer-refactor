@@ -1,129 +1,112 @@
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { objectOf } from 'prop-types';
 
-import { NAVIGATION, ROUTER_PATH } from '../../constants';
-import account from '../../images/Account.svg';
-
+import { NAVIGATION } from './constants';
+import * as Images from './images';
 import {
   NavigationBurgerButton,
   NavigationCloseButton,
+  NavigationDesktopView,
   NavigationLink,
-  NavigationLinkIco,
   NavigationList,
-  NavigationListNone,
-  NavigationNone,
+  NavigationProfileIcon,
   NavigationSidebar,
   NavigationSidebarContainer,
-  NavigationSidebardList,
-  NavigationSidebardMenu,
+  NavigationSidebarContent,
+  NavigationSidebarItem,
   NavigationSidebarLink,
   NavigationSidebarNavLink,
   NavigationSidebarProfile,
   NavigationStyled,
 } from './styled';
 
-export function Navigation({ loggedIn }) {
-  const location = useLocation();
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
+export function Navigation({
+  isShowBurgerMenu,
+  isShowSidebar,
+  sidebarItems,
+  desktopItems,
+  list,
+  link,
+  navLink,
+}) {
+  const [isSidebarOpen, setSidebarOpenState] = useState(false);
 
-  const handleToggleMenu = () => {
-    setMenuIsOpen(!menuIsOpen);
+  const handleToggleSidebar = () => {
+    setSidebarOpenState(!isSidebarOpen);
   };
-  const setActiveForMovies = location.pathname === ROUTER_PATH.MOVIES;
-  const setActiveForSavedMovies =
-    location.pathname === ROUTER_PATH.SAVED_MOVIES;
-  const setActiveForMain = location.pathname === ROUTER_PATH.MAIN;
-  const setActiveMenu = menuIsOpen;
-
+  const Link = link;
+  const NavLink = navLink;
   return (
     <NavigationStyled>
-      <NavigationNone>
-        {loggedIn && (
-          <>
-            <NavigationLink
-              to={ROUTER_PATH.MOVIES}
-              $first
-              $active={setActiveForMovies}>
-              Фильмы
+      <NavigationDesktopView>
+        <>
+          {desktopItems.map((x, i) => (
+            <NavigationLink key={x.url} $first={i === 0} $active={x.isActive}>
+              <Link to={x.url}>{x.title}</Link>
             </NavigationLink>
-            <NavigationLink
-              to={ROUTER_PATH.SAVED_MOVIES}
-              $active={setActiveForSavedMovies}>
-              Сохранённые фильмы
-            </NavigationLink>
-          </>
-        )}
-      </NavigationNone>
+          ))}
+        </>
+      </NavigationDesktopView>
       <NavigationList>
-        {!loggedIn && (
-          <>
-            <li>
-              <NavigationLink to={ROUTER_PATH.REGISTER} $mini>
-                Регистрация
+        <>
+          {list
+            .filter(x => x.type === 'any' && x.isShow)
+            .map(x => (
+              <NavigationLink key={x.url} $mini={x.isMini} $btn={x.isButton}>
+                <Link to={x.url}>{x.title}</Link>
               </NavigationLink>
-            </li>
-            <li>
-              <NavigationLink to={ROUTER_PATH.LOGIN} $mini $btn>
-                Войти
+            ))}
+        </>
+        <NavigationDesktopView>
+          {list
+            .filter(x => x.type === 'desktop' && x.isShow)
+            .map(x => (
+              <NavigationLink key={x.url} $profile={x.isProfile}>
+                <Link to={x.url}>{x.title}</Link>
+                {Images[x.icon] && (
+                  <NavigationProfileIcon src={Images[x.icon]} alt={x.iconAlt} />
+                )}
               </NavigationLink>
-            </li>
-          </>
-        )}
-        {loggedIn && (
-          <NavigationListNone>
-            <NavigationLink to={ROUTER_PATH.PROFILE} $profile>
-              Аккаунт
-              <NavigationLinkIco
-                src={account}
-                alt={NAVIGATION.ICO_ACCOUNT_ALT}
-              />
-            </NavigationLink>
-          </NavigationListNone>
-        )}
+            ))}
+        </NavigationDesktopView>
       </NavigationList>
-      {loggedIn && (
+      {isShowBurgerMenu && (
         <NavigationBurgerButton
           type={NAVIGATION.BURGER_BTN_TYPE}
           aria-label={NAVIGATION.ARIA_LABEL_BTN_BURGER}
-          onClick={handleToggleMenu}
+          onClick={handleToggleSidebar}
         />
       )}
-      {loggedIn && (
-        <NavigationSidebar active={setActiveMenu}>
+      {isShowSidebar && (
+        <NavigationSidebar isShow={isSidebarOpen}>
           <NavigationSidebarContainer>
-            <NavigationCloseButton onClick={handleToggleMenu} />
-            <NavigationSidebardMenu>
-              <NavigationSidebardList>
-                <NavigationSidebarNavLink
-                  to={ROUTER_PATH.MAIN}
-                  $active={setActiveForMain}>
-                  Главная
-                </NavigationSidebarNavLink>
-              </NavigationSidebardList>
-              <NavigationSidebardList>
-                <NavigationSidebarNavLink
-                  to={ROUTER_PATH.MOVIES}
-                  $active={setActiveForMovies}>
-                  Фильмы
-                </NavigationSidebarNavLink>
-              </NavigationSidebardList>
-              <NavigationSidebardList>
-                <NavigationSidebarNavLink
-                  to={ROUTER_PATH.SAVED_MOVIES}
-                  $active={setActiveForSavedMovies}>
-                  Сохранённые фильмы
-                </NavigationSidebarNavLink>
-              </NavigationSidebardList>
-            </NavigationSidebardMenu>
+            <NavigationCloseButton onClick={handleToggleSidebar} />
+            <NavigationSidebarContent>
+              {sidebarItems
+                .filter(x => x.position === 'top')
+                .map(x => (
+                  <NavigationSidebarItem key={x.url}>
+                    <NavigationSidebarNavLink $active={x.isActive} $isTop>
+                      <NavLink to={x.url}>{x.title}</NavLink>
+                    </NavigationSidebarNavLink>
+                  </NavigationSidebarItem>
+                ))}
+            </NavigationSidebarContent>
             <NavigationSidebarProfile>
-              <NavigationSidebarLink to={ROUTER_PATH.PROFILE}>
-                Аккаунт
-                <NavigationLinkIco
-                  src={account}
-                  alt={NAVIGATION.ICO_ACCOUNT_ALT}
-                />
-              </NavigationSidebarLink>
+              {sidebarItems
+                .filter(x => x.position === 'bottom')
+                .map(x => (
+                  <NavigationSidebarLink key={x.url} $isBottom>
+                    <Link to={x.url}>{x.title}</Link>
+                    {Images[x.icon] && (
+                      <NavigationProfileIcon
+                        src={Images[x.icon]}
+                        alt={x.iconAlt}
+                      />
+                    )}
+                  </NavigationSidebarLink>
+                ))}
             </NavigationSidebarProfile>
           </NavigationSidebarContainer>
         </NavigationSidebar>
@@ -133,5 +116,11 @@ export function Navigation({ loggedIn }) {
 }
 
 Navigation.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
+  isShowBurgerMenu: PropTypes.bool.isRequired,
+  isShowSidebar: PropTypes.bool.isRequired,
+  sidebarItems: PropTypes.arrayOf(objectOf).isRequired,
+  desktopItems: PropTypes.arrayOf(objectOf).isRequired,
+  list: PropTypes.arrayOf(objectOf).isRequired,
+  navLink: PropTypes.object,
+  link: PropTypes.object,
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-import MyFoto from '../../../images/MyFoto.jpg';
+import MyFoto from './images/MyFoto.jpg';
 
 export const AboutMeStyled = styled.section`
   margin: 0;

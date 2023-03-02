@@ -1,13 +1,12 @@
-import { Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
-import burgerBtn from '../../images/burger-menu.svg';
-import closeBtn from '../../images/CloseIcon.svg';
+import burgerBtn from './images/burger-menu.svg';
+import closeBtn from './images/CloseIcon.svg';
 
 export const NavigationStyled = styled.nav`
   display: flex;
 `;
-export const NavigationNone = styled.ul`
+export const NavigationDesktopView = styled.div`
   margin: 0;
   align-self: center;
 
@@ -15,17 +14,17 @@ export const NavigationNone = styled.ul`
     display: none;
   }
 `;
-export const NavbarContainer = styled('nav')`
-  width: 100%;
-  height: ${props => (props.extend ? '100vh' : '60px')};
-  background-color: purple;
-  display: flex;
-  flex-direction: column;
-  @media (min-width: 700px) {
-    height: 60px;
+export const NavigationLink = styled.span`
+  > a {
+    text-decoration: none;
+    color: ${props => props.theme.colors.white10};
+
+    ${props =>
+      props.$btn &&
+      `
+          color: ${props.theme.colors.black30};
+      `}
   }
-`;
-export const NavigationLink = styled(Link)`
   padding: 0;
   margin: 0;
   cursor: pointer;
@@ -82,28 +81,18 @@ export const NavigationLink = styled(Link)`
         align-items: center;
     `}
 `;
-export const NavigationList = styled.ul`
+export const NavigationList = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0;
   margin: 0;
-  list-style: none;
   padding-left: 50px;
 `;
 
-export const NavigationLinkIco = styled.img`
+export const NavigationProfileIcon = styled.img`
   margin-left: 13px;
-`;
-
-export const NavigationListNone = styled.li`
-  margin: 0;
-  align-self: center;
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
 `;
 
 export const NavigationBurgerButton = styled.button`
@@ -145,21 +134,22 @@ export const NavigationSidebar = styled.div`
     visibility: hidden;
 
     ${props =>
-      props.active &&
-      `
-        visibility: visible;
-        top: 0;
-        left: 20%;
-        opacity: 1;
-      `}
+      props.isShow
+        ? `
+              visibility: visible;
+              top: 0;
+              left: 20%;
+              opacity: 1;
+          `
+        : ''}
   }
   @media screen and (max-width: 450) {
     width: 100vw;
 
     ${props =>
-      props.active &&
+      props.isShow &&
       `
-              left: 0;
+                left: 0;
           `}
   }
 `;
@@ -192,11 +182,11 @@ export const NavigationCloseButton = styled.button`
     right: 13.44px;
   }
 `;
-export const NavigationSidebardMenu = styled.ul`
+export const NavigationSidebarContent = styled.ul`
   padding-top: 159px;
   margin: 0;
 `;
-export const NavigationSidebardList = styled.li`
+export const NavigationSidebarItem = styled.li`
   font-family: ${props => props.theme.fontFamily.standart};
   font-style: normal;
   font-weight: 500;
@@ -208,21 +198,27 @@ export const NavigationSidebardList = styled.li`
   list-style-type: none;
 `;
 
-export const NavigationSidebarNavLink = styled(NavLink)`
-  text-decoration: none;
-  color: ${props => props.theme.colors.white10};
+export const NavigationSidebarNavLink = styled.span`
+  > a {
+    text-decoration: none;
+    color: ${props => props.theme.colors.white10};
 
-  ${props =>
-    props.$active &&
-    `
-        border-bottom: 2px solid #FFFFFF;
-        height: 26px;
-    `}
+    ${props =>
+      props.$active &&
+      `
+          border-bottom: 2px solid #FFFFFF;
+          height: 26px;
+      `}
+  }
 `;
 export const NavigationSidebarProfile = styled.div`
   padding-bottom: 92px;
 `;
-export const NavigationSidebarLink = styled(Link)`
+export const NavigationSidebarLink = styled.span`
+  > a {
+    text-decoration: none;
+    color: ${props => props.theme.colors.white10};
+  }
   text-decoration: none;
   color: ${props => props.theme.colors.white10};
   align-items: center;

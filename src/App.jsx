@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/jsx-no-constructed-context-values */
+import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { Loader } from './components/Movies/Preloader';
-import {
-  AppLayout,
-  CurrentUserContext,
-  ErrorPage,
-  Login,
-  Main,
-  Movies,
-  Profile,
-  ProtectedRoute,
-  Register,
-  SavedMovies,
-} from './components';
+import { Loader } from './components/Preloader';
+import { AppLayout, Main, Popup, ProtectedRoute } from './components';
 import { ROUTER_PATH } from './constants';
+import {
+  ErrorPageContainer,
+  HeaderContainer,
+  LoginContainer,
+  ProfileContainer,
+  RegisterContainer,
+} from './containers';
+import { AuthContext, CurrentUserContext, MoviesContext } from './contexts';
+import { Movies, SavedMovies } from './pages';
 import { baseTheme } from './theme';
 import { mainApi } from './utils';
 
@@ -192,84 +191,101 @@ export function App() {
     }
   }, [loggedIn, user]);
 
+  const authContextValue = useMemo(
+    () => ({
+      loggedIn,
+      isLoginProcess,
+      isRegisterProcess,
+      onAuthorization: handleAuthorization,
+      onRegistration: handleRegistration,
+      onSignOut: handleSignOut,
+      onChangeProfile: handleChangeProfile,
+    }),
+    [
+      loggedIn,
+      isLoginProcess,
+      isRegisterProcess,
+      handleAuthorization,
+      handleRegistration,
+      handleChangeProfile,
+      handleSignOut,
+    ],
+  );
+
+  const moviesContextValue = useMemo(
+    () => ({
+      savedMoviesList,
+      onSaveFilm: handleSaveFilm,
+      onDeleteFilm: handleDeleteFilm,
+    }),
+    [handleDeleteFilm, handleSaveFilm, savedMoviesList],
+  );
+
   return (
     <ThemeProvider theme={baseTheme}>
       {isLoading ? (
         <Loader />
       ) : (
         <CurrentUserContext.Provider value={user}>
-          <Routes>
-            <Route
-              path={ROUTER_PATH.MAIN}
-              element={
-                <AppLayout
-                  isOpen={popupIsOpen}
-                  onClose={handleClosePopup}
-                  isSuccess={isSuccess}
-                  text={text}
-                />
-              }>
-              <Route index element={<Main loggedIn={loggedIn} />} />
-              <Route
-                path={ROUTER_PATH.LOGIN}
-                element={
-                  <Login
-                    onAuthorization={handleAuthorization}
-                    loggedIn={loggedIn}
-                    isInquiry={isLoginProcess}
+          <AuthContext.Provider value={authContextValue}>
+            <MoviesContext.Provider value={moviesContextValue}>
+              <Routes>
+                <Route
+                  path={ROUTER_PATH.MAIN}
+                  element={
+                    <AppLayout>
+                      <Popup
+                        isOpen={popupIsOpen}
+                        onClose={handleClosePopup}
+                        isSuccess={isSuccess}
+                        text={text}
+                      />
+                    </AppLayout>
+                  }>
+                  <Route
+                    index
+                    element={<Main header={<HeaderContainer />} />}
                   />
-                }
-              />
-              <Route
-                path={ROUTER_PATH.REGISTER}
-                element={
-                  <Register
-                    onRegistration={handleRegistration}
-                    loggedIn={loggedIn}
-                    isInquiry={isRegisterProcess}
+                  <Route
+                    path={ROUTER_PATH.LOGIN}
+                    element={<LoginContainer />}
                   />
-                }
-              />
-              <Route
-                path={ROUTER_PATH.MOVIES}
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <Movies
-                      loggedIn={loggedIn}
-                      onSaveFilm={handleSaveFilm}
-                      onDeleteFilm={handleDeleteFilm}
-                      savedMoviesList={savedMoviesList}
-                    />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path={ROUTER_PATH.SAVED_MOVIES}
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <SavedMovies
-                      loggedIn={loggedIn}
-                      onDeleteFilm={handleDeleteFilm}
-                      savedMoviesList={savedMoviesList}
-                    />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path={ROUTER_PATH.PROFILE}
-                element={
-                  <ProtectedRoute loggedIn={loggedIn}>
-                    <Profile
-                      loggedIn={loggedIn}
-                      handleChangeProfile={handleChangeProfile}
-                      handleSignOut={handleSignOut}
-                    />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path={ROUTER_PATH.ALIEN} element={<ErrorPage />} />
-            </Route>
-          </Routes>
+                  <Route
+                    path={ROUTER_PATH.REGISTER}
+                    element={<RegisterContainer />}
+                  />
+                  <Route
+                    path={ROUTER_PATH.MOVIES}
+                    element={
+                      <ProtectedRoute>
+                        <Movies />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTER_PATH.SAVED_MOVIES}
+                    element={
+                      <ProtectedRoute>
+                        <SavedMovies />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTER_PATH.PROFILE}
+                    element={
+                      <ProtectedRoute>
+                        <ProfileContainer />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path={ROUTER_PATH.ALIEN}
+                    element={<ErrorPageContainer />}
+                  />
+                </Route>
+              </Routes>
+            </MoviesContext.Provider>
+          </AuthContext.Provider>
         </CurrentUserContext.Provider>
       )}
     </ThemeProvider>

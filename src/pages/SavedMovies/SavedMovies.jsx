@@ -1,10 +1,13 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer, PageWrapper } from '../../components';
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import { CurrentUserContext, SearchFormContext } from '../../contexts';
+import {
+  CurrentUserContext,
+  MoviesContext,
+  SearchFormContext,
+} from '../../contexts';
 import { transformDuration } from '../../utils';
 import { SearchFormContainer } from '../Movies';
 import { MoviesCardListContainer } from '../Movies/MoviesCardListContainer';
@@ -16,7 +19,8 @@ function transformMovies(movies) {
     isLiked: true,
   }));
 }
-export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
+export function SavedMovies() {
+  const { onDeleteFilm, savedMoviesList } = useContext(MoviesContext);
   const { email } = useContext(CurrentUserContext);
 
   const [shortMovies, setShortMovies] = useState(false);
@@ -92,8 +96,3 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
     </>
   );
 }
-
-SavedMovies.propTypes = {
-  onDeleteFilm: PropTypes.func.isRequired,
-  savedMoviesList: PropTypes.arrayOf(objectOf).isRequired,
-};

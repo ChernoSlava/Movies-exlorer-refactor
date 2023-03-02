@@ -1,18 +1,23 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useContext, useEffect, useMemo, useState } from 'react';
-import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer, PageWrapper } from '../../components';
 import { Loader } from '../../components/Preloader';
 import { SHORT_DURATION } from '../../constants';
 import { HeaderContainer } from '../../containers/HeaderContainer';
-import { CurrentUserContext, SearchFormContext } from '../../contexts';
+import {
+  CurrentUserContext,
+  MoviesContext,
+  SearchFormContext,
+} from '../../contexts';
 import { moviesApi, transformDuration } from '../../utils';
 
 import { MoviesCardListContainer } from './MoviesCardListContainer';
 import { SearchFormContainer } from './SearchFormContainer';
 
-export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
+export function Movies() {
+  const { onSaveFilm, onDeleteFilm, savedMoviesList } =
+    useContext(MoviesContext);
   const { email } = useContext(CurrentUserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [moviesFromSearch, setMoviesFromSearch] = useState([]);
@@ -147,9 +152,3 @@ export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
     </>
   );
 }
-
-Movies.propTypes = {
-  onSaveFilm: PropTypes.func.isRequired,
-  onDeleteFilm: PropTypes.func.isRequired,
-  savedMoviesList: PropTypes.arrayOf(objectOf).isRequired,
-};

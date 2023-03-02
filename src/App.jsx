@@ -10,12 +10,11 @@ import {
   ErrorPageContainer,
   HeaderContainer,
   LoginContainer,
-  Movies,
   ProfileContainer,
   RegisterContainer,
-  SavedMovies,
 } from './containers';
 import { AuthContext, CurrentUserContext } from './contexts';
+import { Movies, SavedMovies } from './pages';
 import { baseTheme } from './theme';
 import { mainApi } from './utils';
 

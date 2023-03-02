@@ -5,9 +5,9 @@ import PropTypes, { objectOf } from 'prop-types';
 import { Footer } from '../../components';
 import { Loader } from '../../components/Preloader';
 import { SHORT_DURATION } from '../../constants';
+import { HeaderContainer } from '../../containers/HeaderContainer';
 import { CurrentUserContext, SearchFormContext } from '../../contexts';
 import { moviesApi, transformDuration } from '../../utils';
-import { HeaderContainer } from '../HeaderContainer';
 
 import { MoviesCardListContainer } from './MoviesCardListContainer';
 import { SearchFormContainer } from './SearchFormContainer';

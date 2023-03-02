@@ -3,9 +3,9 @@ import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
 import { Footer } from '../../components';
+import { HeaderContainer } from '../../containers/HeaderContainer';
 import { CurrentUserContext, SearchFormContext } from '../../contexts';
 import { transformDuration } from '../../utils';
-import { HeaderContainer } from '../HeaderContainer';
 import { SearchFormContainer } from '../Movies';
 import { MoviesCardListContainer } from '../Movies/MoviesCardListContainer';
 

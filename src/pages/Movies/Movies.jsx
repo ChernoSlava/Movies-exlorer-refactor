@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
-import { Footer } from '../../components';
+import { Footer, PageWrapper } from '../../components';
 import { Loader } from '../../components/Preloader';
 import { SHORT_DURATION } from '../../constants';
 import { HeaderContainer } from '../../containers/HeaderContainer';
@@ -11,7 +11,6 @@ import { moviesApi, transformDuration } from '../../utils';
 
 import { MoviesCardListContainer } from './MoviesCardListContainer';
 import { SearchFormContainer } from './SearchFormContainer';
-import { MoviesStyled } from './styled';
 
 export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
   const { email } = useContext(CurrentUserContext);
@@ -134,7 +133,7 @@ export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
     <>
       {isLoading && <Loader />}
       <HeaderContainer />
-      <MoviesStyled>
+      <PageWrapper>
         <SearchFormContext.Provider value={SearchFormContextValue}>
           <SearchFormContainer />
         </SearchFormContext.Provider>
@@ -143,7 +142,7 @@ export function Movies({ onSaveFilm, onDeleteFilm, savedMoviesList }) {
           onDeleteFilm={onDeleteFilm}
           items={filteredMovies}
         />
-      </MoviesStyled>
+      </PageWrapper>
       <Footer />
     </>
   );

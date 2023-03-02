@@ -2,14 +2,12 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
-import { Footer } from '../../components';
+import { Footer, PageWrapper } from '../../components';
 import { HeaderContainer } from '../../containers/HeaderContainer';
 import { CurrentUserContext, SearchFormContext } from '../../contexts';
 import { transformDuration } from '../../utils';
 import { SearchFormContainer } from '../Movies';
 import { MoviesCardListContainer } from '../Movies/MoviesCardListContainer';
-
-import { SavedMoviesStyled } from './styled';
 
 function transformMovies(movies) {
   return movies.map(movie => ({
@@ -81,7 +79,7 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
   return (
     <>
       <HeaderContainer />
-      <SavedMoviesStyled>
+      <PageWrapper>
         <SearchFormContext.Provider value={SearchFormContextValue}>
           <SearchFormContainer />
         </SearchFormContext.Provider>
@@ -89,7 +87,7 @@ export function SavedMovies({ onDeleteFilm, savedMoviesList }) {
           onDeleteFilm={onDeleteFilm}
           items={filteredMovies}
         />
-      </SavedMoviesStyled>
+      </PageWrapper>
       <Footer />
     </>
   );

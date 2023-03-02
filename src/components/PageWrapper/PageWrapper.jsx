@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-export const MoviesStyled = styled.section`
+export const PageWrapper = styled.section`
   width: 100%;
   height: 100%;
   flex: 1 0 auto;

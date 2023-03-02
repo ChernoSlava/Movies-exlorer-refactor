@@ -14,3 +14,4 @@ export { SearchForm } from './SearchForm';
 export { MoviesCard } from './MoviesCard';
 export { MoviesCardList } from './MoviesCardList';
 export { Navigation } from './Navigation';
+export { PageWrapper } from './PageWrapper';

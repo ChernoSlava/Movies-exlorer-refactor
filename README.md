@@ -16,11 +16,9 @@
 ## Технологический стек
 - HTML5: семантические теги,
 - CSS 3: медиа-запросы,
-- React js, 
-- Node js, 
-- MongoDB, 
-- Express js, 
 - JavaScript: React,
+- React hooks,
+- Higher-Order Components,
 - Storybook,
 - Styled Components,
 - ESLint;
@@ -141,11 +139,6 @@
 --- 
 ## Основные ссылки
 ### Оригинальный макет проекта https://disk.yandex.ru/d/69oaThBQQpratA
----
-### Публичный IP - 158.160.58.195
-### Домен с оригинальным приложением [https://movies.chernoslava.nomoredomainsclub.ru](https://movies.chernoslava.nomoredomainsclub.ru)
-### Домен с сервером приложения [https://api.movies.chernoslava.nomoredomains.club](https://api.movies.chernoslava.nomoredomains.club)
----
 ### Ссылка на github frontend части [frontend](https://github.com/ChernoSlava/Movies-exlorer-refactor)
 ### Ссылка на github оригинальной frontend части [frontend-origin](https://github.com/ChernoSlava/movies-explorer-frontend)
 ### Ссылка на github backend части [backend](https://github.com/ChernoSlava/movies-explorer-api)

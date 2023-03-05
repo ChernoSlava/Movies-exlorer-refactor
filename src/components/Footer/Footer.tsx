@@ -10,7 +10,9 @@ import {
   FooterTitle,
 } from './styled';
 
-export function Footer() {
+export type IsLastType = { isLast: boolean | '' };
+
+export const Footer: React.FC<IsLastType> = (): JSX.Element => {
   return (
     <FooterStyled>
       <FooterTitle>Учебный проект Яндекс.Практикум х BeatFilm.</FooterTitle>
@@ -21,18 +23,19 @@ export function Footer() {
           <FooterLink
             href="https://practicum.yandex.ru"
             target="_blank"
-            rel="noreferrer">
+            rel="noreferrer"
+            isLast={false}>
             Яндекс.Практикум
           </FooterLink>
           <FooterLink
             href="https://github.com/ChernoSlava"
             target="_blank"
             rel="noreferrer"
-            last>
+            isLast>
             Github
           </FooterLink>
         </FooterLinks>
       </FooterNav>
     </FooterStyled>
   );
-}
+};

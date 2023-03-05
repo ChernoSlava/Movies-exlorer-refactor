@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { ROUTER_PATH } from '../../constants';
 import { AuthContext } from '../../contexts';
 
-export function ProtectedRoute({ children }) {
+export const ProtectedRoute: React.FC<{
+  children: React.ReactElement | null;
+}> = ({ children }): JSX.Element => {
   const { loggedIn } = useContext(AuthContext);
 
   const location = useLocation();
@@ -16,8 +17,4 @@ export function ProtectedRoute({ children }) {
   }
 
   return children;
-}
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.element.isRequired,
 };

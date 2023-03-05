@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import notSuccessIco from './images/Failed.svg';
 import successIco from './images/Success.svg';
@@ -11,11 +10,17 @@ import {
   PopupStyled,
 } from './styled';
 
-export function Popup({ isOpen, onClose, text, isSuccess }) {
+export const Popup: React.FC<{
+  isOpen: () => void;
+  onClose: () => void;
+  text: string;
+  isSuccess: boolean;
+  opened: () => void;
+}> = ({ isOpen, onClose, text, isSuccess }): JSX.Element => {
   useEffect(() => {
     if (!isOpen) return;
 
-    const closeByEscape = e => {
+    const closeByEscape = (e: { key: string }) => {
       if (e.key === 'Escape') {
         onClose();
       }
@@ -25,7 +30,7 @@ export function Popup({ isOpen, onClose, text, isSuccess }) {
     // return () => document.removeEventListener('keydown', closeByEscape);
   }, [isOpen, onClose]);
 
-  const handleOverlay = e => {
+  const handleOverlay = (e: { target: any; currentTarget: any }) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
@@ -45,11 +50,4 @@ export function Popup({ isOpen, onClose, text, isSuccess }) {
       </PopupContainer>
     </PopupStyled>
   );
-}
-
-Popup.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  text: PropTypes.string.isRequired,
-  isSuccess: PropTypes.bool.isRequired,
 };

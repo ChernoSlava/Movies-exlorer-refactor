@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import useSound from 'use-sound';
 
 import sauron from './assets/sauron.mp3';
@@ -20,7 +19,27 @@ import {
   TogglePasswordDisplay,
 } from './styled';
 
-export function Login({
+export type errorsConten = {
+  password?: string;
+  email?: string;
+}
+export type valuesConten = {
+  password?: string;
+  email?: string;
+}
+export const Login: React.FC<{
+  logo: React.ReactElement | null;
+  handleSubmit: () => void;
+  errors?: errorsConten;
+  handleChange: (target: HTMLInputElement) => void;
+  isLoginProcess: boolean;
+  values?: valuesConten;
+  isDisabled: boolean;
+  onClickForNavigate: () => void;
+  isError?: boolean;
+  isBlock?: boolean;
+  isActive?: boolean;
+}> = ({
   logo,
   handleSubmit,
   errors,
@@ -29,7 +48,7 @@ export function Login({
   values,
   isDisabled,
   onClickForNavigate,
-}) {
+}): JSX.Element => {
   const [isPasswordShow, togglePasswordShow] = useState(false);
   const [playShowPassword] = useSound(sauron, { volume: 0.1 });
 
@@ -40,14 +59,14 @@ export function Login({
         <LoginTitle>Скорее на борт!</LoginTitle>
         <LoginFieldset>
           <LoginLabel htmlFor="email">
-            <LoginFieldError isError={errors.email}>
+            <LoginFieldError isError={!!errors.email}>
               {errors.email}
             </LoginFieldError>
             <LoginField>Космо почта</LoginField>
             <LoginInput
-              onChange={handleChange}
-              isError={errors.email}
-              isDisa={isLoginProcess}
+              onChange={(e) => handleChange(e.target)}
+              isError={!!errors.email}
+              isDisabled={isLoginProcess}
               name="email"
               placeholder="star@mail.ru"
               type="email"
@@ -58,14 +77,14 @@ export function Login({
             />
           </LoginLabel>
           <LoginLabel htmlFor="password">
-            <LoginFieldError isError={errors.password}>
+            <LoginFieldError isError={!!errors.password}>
               {errors.password}
             </LoginFieldError>
             <LoginField>Космо пароль</LoginField>
             <LoginInput
-              onChange={handleChange}
-              isError={errors.password}
-              isDisa={isLoginProcess}
+              onChange={(e) => handleChange(e.target)}
+              isError={!!errors.password}
+              isDisabled={isLoginProcess}
               name="password"
               placeholder="Пароль"
               minLength={6}
@@ -76,7 +95,7 @@ export function Login({
               autoComplete="current-password"
             />
             <TogglePasswordDisplay
-              active={isPasswordShow}
+              isActive={isPasswordShow}
               onClick={() =>
                 togglePasswordShow(prev => {
                   if (!prev) {
@@ -107,23 +126,23 @@ export function Login({
   );
 }
 
-Login.propTypes = {
-  errors: PropTypes.shape({
-    password: PropTypes.string,
-    email: PropTypes.string,
-  }),
-  values: PropTypes.shape({
-    password: PropTypes.string,
-    email: PropTypes.string,
-  }),
-  logo: PropTypes.element.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  isLoginProcess: PropTypes.bool.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
-  onClickForNavigate: PropTypes.func.isRequired,
-};
-Login.defaultProps = {
-  errors: {},
-  values: {},
-};
+// Login.propTypes = {
+//   errors: PropTypes.shape({
+//     password: PropTypes.string,
+//     email: PropTypes.string,
+//   }),
+//   values: PropTypes.shape({
+//     password: PropTypes.string,
+//     email: PropTypes.string,
+//   }),
+//   logo: PropTypes.element.isRequired,
+//   handleSubmit: PropTypes.func.isRequired,
+//   handleChange: PropTypes.func.isRequired,
+//   isLoginProcess: PropTypes.bool.isRequired,
+//   isDisabled: PropTypes.bool.isRequired,
+//   onClickForNavigate: PropTypes.func.isRequired,
+// };
+// Login.defaultProps = {
+//   errors: {},
+//   values: {},
+// };

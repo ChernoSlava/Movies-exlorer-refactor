@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PreloaderContainer, PreloaderRound, PreloaderStyled } from './styled';
 
-export function Loader() {
+export const Loader = (): JSX.Element => {
   return (
     <PreloaderStyled>
       <PreloaderContainer>
@@ -28,4 +28,4 @@ export function Loader() {
       </PreloaderContainer>
     </PreloaderStyled>
   );
-}
+};

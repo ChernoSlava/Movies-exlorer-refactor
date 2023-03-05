@@ -6,21 +6,21 @@ export function useForm() {
   const [errors, setErrors] = useState({});
   const [isEmptiness, setIsEmptiness] = useState(false);
 
-  const handleChange = e => {
-    const input = e.target;
-    const { name, value } = input;
+  const handleChange = (target: HTMLInputElement ) => {
+    // const input = e.target as HTMLInputElement;
+    const { name, value } = target;
 
     if (name === 'email') {
       if (!isEmail(value)) {
-        input.setCustomValidity('Указана некорректная почта');
+        target.setCustomValidity('Указана некорректная почта');
       } else {
-        input.setCustomValidity('');
+        target.setCustomValidity('');
       }
     }
 
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: input.validationMessage });
-    setIsEmptiness(input.closest('form').checkValidity());
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setIsEmptiness(target.closest('form').checkValidity());
   };
 
   const resetForm = useCallback(

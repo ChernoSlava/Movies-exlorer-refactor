@@ -1,5 +1,6 @@
 /* eslint-disable react/function-component-definition */
 import React from 'react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { MoviesCardList } from '../MoviesCardList';
 
@@ -10,9 +11,9 @@ export default {
     onSaveFilm: { action: 'clicked' },
     onDeleteFilm: { action: 'clicked' },
   },
-};
+} as ComponentMeta<typeof MoviesCardList>;
 
-const Template = args => {
+const Template: ComponentStory<typeof MoviesCardList> = args => {
   return (
     <div
       style={{

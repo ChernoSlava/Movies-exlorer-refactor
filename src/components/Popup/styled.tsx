@@ -3,7 +3,9 @@ import styled from 'styled-components/macro';
 import icoClose from './images/Close-Icon.svg';
 import icoCloseMini from './images/Close-Icon-mini.svg';
 
-export const PopupStyled = styled.div`
+export const PopupStyled = styled.div<{
+  opened: () => void;
+}>`
   width: 100%;
   height: 100%;
   position: fixed;

@@ -3,9 +3,17 @@
     "browser": true,
     "es2021": true
   },
+  "ignorePatterns": [
+    "node_modules",
+    "build",
+    "dist"
+  ],
   "extends": [
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "airbnb",
+    "plugin:react-hooks/recommended",
     "react-app/jest",
     "plugin:prettier/recommended"
   ],
@@ -65,6 +73,7 @@
       }
     }
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module"
@@ -72,7 +81,8 @@
   "plugins": [
     "react",
     "prettier",
-    "simple-import-sort"
+    "simple-import-sort",
+    "@typescript-eslint"
   ],
   "rules": {
     "linebreak-style": [
@@ -95,9 +105,51 @@
         "ignoreComments": true
       }
     ],
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "@typescript-eslint/no-unused-vars": "error",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "**/*.stories.*",
+          "**/.storybook/**/*.*"
+        ],
+        "peerDependencies": true
+      }
+    ],
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "no-underscore-dangle": "off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "react/require-default-props": "off",
+    "react/no-unused-prop-types": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      },
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
   }
 }

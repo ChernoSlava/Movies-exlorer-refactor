@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes, { objectOf } from 'prop-types';
 
-import { MoviesCard } from '../MoviesCard';
+import { movieData, MoviesCard } from '../MoviesCard';
 
 import { ADD_CARDS, FEATURED_CARDS, SCREEN_SIZE } from './constants';
 import {
@@ -11,7 +11,12 @@ import {
   MoviesCardListStyled,
 } from './styled';
 
-export function MoviesCardList({ onSaveFilm, onDeleteFilm, items, canPaged }) {
+export const MoviesCardList: React.FC<{
+  onSaveFilm: () => void;
+  onDeleteFilm?: () => void;
+  items: Array<movieData>;
+  canPaged: boolean;
+}> = ({ onSaveFilm, onDeleteFilm, items, canPaged }): JSX.Element => {
   const [currentPage, setNextPage] = useState(0);
   const [sizeScreen, setSizeSreen] = useState({ width: window.innerWidth });
   const [pageSize, setPageSize] = useState(0);
@@ -76,12 +81,12 @@ export function MoviesCardList({ onSaveFilm, onDeleteFilm, items, canPaged }) {
     </MoviesCardListStyled>
   );
 }
-MoviesCardList.propTypes = {
-  onSaveFilm: PropTypes.func,
-  onDeleteFilm: PropTypes.func.isRequired,
-  items: PropTypes.arrayOf(objectOf).isRequired,
-  canPaged: PropTypes.bool.isRequired,
-};
-MoviesCardList.defaultProps = {
-  onSaveFilm: PropTypes.func,
-};
+// MoviesCardList.propTypes = {
+//   onSaveFilm: PropTypes.func,
+//   onDeleteFilm: PropTypes.func.isRequired,
+//   items: PropTypes.arrayOf(objectOf).isRequired,
+//   canPaged: PropTypes.bool.isRequired,
+// };
+// MoviesCardList.defaultProps = {
+//   onSaveFilm: PropTypes.func,
+// };

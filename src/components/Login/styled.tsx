@@ -66,7 +66,9 @@ export const LoginLabel = styled.label`
   position: relative;
 `;
 
-export const LoginFieldError = styled.span`
+export const LoginFieldError = styled.span<{
+  isError?: boolean
+}>`
   margin: 0;
   padding: 0;
   position: absolute;
@@ -108,7 +110,10 @@ export const LoginField = styled.p`
   padding-bottom: 10px;
 `;
 
-export const LoginInput = styled.input`
+export const LoginInput = styled.input<{
+  isError?: boolean;
+  isDisabled?: boolean;
+}>`
   margin: 0;
   padding: 0;
   background: ${props => props.theme.colors.grey20};
@@ -131,14 +136,16 @@ export const LoginInput = styled.input`
     `}
 
   animation: ${props =>
-    props.isDisa
+    props.isDisabled
       ? css`
           ${fade} 2s ease forwards;
         `
       : ''};
 `;
 
-export const TogglePasswordDisplay = styled.div`
+export const TogglePasswordDisplay = styled.div<{
+  isActive?: boolean
+}>`
   padding: 0;
   margin: 0;
   position: absolute;
@@ -152,7 +159,7 @@ export const TogglePasswordDisplay = styled.div`
   transition: 0.1s;
 
   ${props =>
-    props.active &&
+    props.isActive &&
     `
         background-image: url(${openedEye});
         transition: 1s;  
@@ -167,7 +174,9 @@ export const LoginButtonContainer = styled.div`
   width: 100%;
 `;
 
-export const LoginSubmitButton = styled.button`
+export const LoginSubmitButton = styled.button<{
+  isBlock?: boolean
+}>`
   margin: 0;
   padding: 0;
   border: transparent;

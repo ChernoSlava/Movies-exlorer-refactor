@@ -101,7 +101,10 @@ export const MoviesCardTime = styled.h3`
     padding-top: 14px;
   }
 `;
-export const MoviesCardButton = styled.button`
+export const MoviesCardButton = styled.button<{
+  isSave?: boolean;
+  isDelet?: boolean;
+}>`
   width: 30px;
   height: 30px;
   background: transparent;
@@ -113,12 +116,12 @@ export const MoviesCardButton = styled.button`
   background-image: url(${save});
 
   ${props =>
-    props.save &&
+    props.isSave &&
     `
     background-image: url(${saved});
   `}
   ${props =>
-    props.delet &&
+    props.isDelet &&
     `
     background-image: url(${delet});
   `}

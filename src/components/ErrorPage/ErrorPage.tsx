@@ -1,9 +1,10 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 
 import { ErrorPageBtn, ErrorPageStyled } from './styled';
 
-export function ErrorPage({ onClick }) {
+export const ErrorPage: React.FC<{
+  onClick: () => void;
+}> = ({ onClick }): JSX.Element => {
   return (
     <ErrorPageStyled>
       <ErrorPageBtn type="button" onClick={onClick}>
@@ -12,6 +13,3 @@ export function ErrorPage({ onClick }) {
     </ErrorPageStyled>
   );
 }
-ErrorPage.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};

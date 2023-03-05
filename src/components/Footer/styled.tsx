@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import type { IsLastType } from './Footer';
 
 export const FooterStyled = styled.footer`
   margin: 0;
@@ -95,7 +96,7 @@ export const FooterLinks = styled.div`
   }
 `;
 
-export const FooterLink = styled.a`
+export const FooterLink = styled.a<IsLastType>`
   color: ${props => props.theme.colors.white10};
   text-decoration: none;
 
@@ -104,7 +105,7 @@ export const FooterLink = styled.a`
   }
 
   ${props =>
-    props.last &&
+    props.isLast &&
     `
         padding-left: 20px;
             

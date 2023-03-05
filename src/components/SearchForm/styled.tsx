@@ -94,7 +94,9 @@ export const SearchFormCheckboxContainer = styled.div`
     justify-content: center;
   }
 `;
-export const SearchFormCheckboxLabel = styled.label`
+export const SearchFormCheckboxLabel = styled.label<{
+  checked: boolean;
+}>`
   padding: 0;
   margin: 0;
   position: relative;

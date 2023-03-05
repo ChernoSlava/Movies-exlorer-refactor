@@ -1,6 +1,7 @@
 /* eslint-disable react/function-component-definition */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { useForm } from '../../../hooks';
 import { SearchForm } from '../SearchForm';
@@ -12,10 +13,10 @@ export default {
     onSaveFilm: { action: 'clicked' },
     onDeleteFilm: { action: 'clicked' },
   },
-};
+} as ComponentMeta<typeof SearchForm>;
 
-const Template = args => {
-  const { values, handleChange } = useForm({});
+const Template: ComponentStory<typeof SearchForm> = args => {
+  const { values, handleChange } = useForm();
   return (
     <div
       style={{
@@ -39,12 +40,12 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   errorText: true,
-  onSubmit: e => {
+  onSubmit: (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     action('handleSubmit')(e);
   },
   shortMovies: false,
-  handleShortMovies: e => {
+  handleShortMovies: (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     action('handleShortMovies')(e);
   },

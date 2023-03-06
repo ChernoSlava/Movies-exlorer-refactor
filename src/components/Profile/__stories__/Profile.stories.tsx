@@ -1,6 +1,7 @@
 /* eslint-disable react/function-component-definition */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { useForm } from '../../../hooks';
 import { Profile } from '../Profile';
@@ -8,10 +9,10 @@ import { Profile } from '../Profile';
 export default {
   title: 'Example/Profile',
   component: Profile,
-};
+} as ComponentMeta<typeof Profile>;
 
-const Template = args => {
-  const { values, errors, handleChange } = useForm({});
+const Template: ComponentStory<typeof Profile> = args => {
+  const { values, errors, handleChange } = useForm();
   return (
     <Profile
       {...args}
@@ -35,7 +36,7 @@ Primary.args = {
   isInutErrorName: false,
   isInutErrorEmail: false,
   name: 'Slava',
-  handleSubmit: e => {
+  handleSubmit: (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     action('handleSubmit')(e);
   },

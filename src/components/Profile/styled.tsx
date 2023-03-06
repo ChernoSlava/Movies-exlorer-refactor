@@ -52,7 +52,10 @@ export const ProfileLabel = styled.label`
     width: 260px;
   }
 `;
-export const ProfileFieldError = styled.span`
+export const ProfileFieldError = styled.span<{
+  isErrorName?: boolean;
+  isErrorEmail?: boolean;
+}>`
   margin: 0;
   padding: 0;
   position: absolute;
@@ -64,13 +67,13 @@ export const ProfileFieldError = styled.span`
   color: ${props => props.theme.colors.red10};
 
   ${props =>
-    props.nam &&
+    props.isErrorName &&
     `
         top: -20px;
         left: 0;
     `}
   ${props =>
-    props.email &&
+    props.isErrorEmail &&
     `
         top: 20px;
         left: 0;
@@ -86,7 +89,9 @@ export const ProfileField = styled.p`
   line-height: 13px;
   color: ${props => props.theme.colors.white10};
 `;
-export const ProfileInput = styled.input`
+export const ProfileInput = styled.input<{
+  isError?: boolean;
+}>`
   margin: 0;
   padding: 0;
   border: transparent;
@@ -100,7 +105,7 @@ export const ProfileInput = styled.input`
   color: ${props => props.theme.colors.white10};
 
   ${props =>
-    props.err &&
+    props.isError &&
     `
         color: ${props.theme.colors.red10};
     `}
@@ -124,7 +129,11 @@ export const ProfileButtonsContainer = styled.div`
     padding-top: 379px;
   }
 `;
-export const ProfileButton = styled.button`
+export const ProfileButton = styled.button<{
+  isEdit?: boolean;
+  isDisabled?: boolean;
+  isExit?: boolean;
+}>`
   background-color: transparent;
   border: 0;
   font-family: ${props => props.theme.fontFamily.standart};
@@ -137,13 +146,13 @@ export const ProfileButton = styled.button`
   cursor: pointer;
 
   ${props =>
-    props.edit &&
+    props.isEdit &&
     `
         font-weight: 400;
         color: ${props.theme.colors.white10};
     `}
   ${props =>
-    props.disab &&
+    props.isDisabled &&
     `
         color: ${props.theme.colors.grey40};
         cursor: not-allowed; 
@@ -153,7 +162,7 @@ export const ProfileButton = styled.button`
         }
     `}
     ${props =>
-    props.exit &&
+    props.isExit &&
     `
         font-weight: 500;
         color: ${props.theme.colors.red10};

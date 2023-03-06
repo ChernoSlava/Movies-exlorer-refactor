@@ -17,7 +17,29 @@ import {
   RegisterTitle,
 } from './styled';
 
-export function Register({
+export type errorsConten = {
+  name?: string;
+  password?: string;
+  email?: string;
+}
+export type valuesConten = {
+  name?: string;
+  password?: string;
+  email?: string;
+}
+
+export const Register: React.FC<{
+  logo: React.ReactElement | null;
+  handleSubmit: () => void;
+  errors?: errorsConten;
+  handleChange: (target: HTMLInputElement) => void;
+  isRegisterProcess: boolean;
+  values?: valuesConten;
+  isDisabled: boolean;
+  onClickForNavigate: () => void;
+  isError?: boolean;
+  isBlock?: boolean;
+}> = ({
   logo,
   handleSubmit,
   errors,
@@ -26,7 +48,7 @@ export function Register({
   values,
   isDisabled,
   onClickForNavigate,
-}) {
+}):JSX.Element => {
   return (
     <RegisterStyled>
       <RegisterForm onSubmit={handleSubmit} noValidate>
@@ -34,12 +56,12 @@ export function Register({
         <RegisterTitle>Добро пожаловать!</RegisterTitle>
         <RegisterFieldset>
           <RegisterLabel htmlFor="name">
-            <RegisterFieldError isError={errors.name}>
+            <RegisterFieldError isError={!!errors.name}>
               {errors.name}
             </RegisterFieldError>
             <RegisterField>Имя</RegisterField>
             <RegisterInput
-              isErr={errors.name}
+              isError={!!errors.name}
               isInquiry={isRegisterProcess}
               name="name"
               placeholder="Ваше имя"
@@ -47,43 +69,43 @@ export function Register({
               maxLength={40}
               type="text"
               required
-              onChange={handleChange}
+              onChange={(e) => handleChange(e.target)}
               value={values.name || ''}
               disabled={isRegisterProcess}
             />
           </RegisterLabel>
           <RegisterLabel htmlFor="email">
-            <RegisterFieldError isError={errors.email}>
+            <RegisterFieldError isError={!!errors.email}>
               {errors.email}
             </RegisterFieldError>
             <RegisterField>Космо почта</RegisterField>
             <RegisterInput
-              isErr={errors.email}
+              isError={!!errors.email}
               isInquiry={isRegisterProcess}
               name="email"
               placeholder="star@mail.ru"
               type="email"
               required
-              onChange={handleChange}
+              onChange={(e) => handleChange(e.target)}
               value={values.email || ''}
               disabled={isRegisterProcess}
               autoComplete="email"
             />
           </RegisterLabel>
           <RegisterLabel htmlFor="password">
-            <RegisterFieldError isError={errors.password}>
+            <RegisterFieldError isError={!!errors.password}>
               {errors.password}
             </RegisterFieldError>
             <RegisterField>Космо пароль</RegisterField>
             <RegisterInput
-              isErr={errors.password}
+              isError={!!errors.password}
               isInquiry={isRegisterProcess}
               name="password"
               placeholder="Пароль"
               minLength={6}
               type="password"
               required
-              onChange={handleChange}
+              onChange={(e) => handleChange(e.target)}
               value={values.password || ''}
               disabled={isRegisterProcess}
               autoComplete="new-password"

@@ -65,7 +65,9 @@ export const RegisterLabel = styled.label`
   position: relative;
 `;
 
-export const RegisterFieldError = styled.span`
+export const RegisterFieldError = styled.span<{
+  isError?: boolean; 
+}>`
   margin: 0;
   padding: 0;
   position: absolute;
@@ -104,7 +106,10 @@ const fade = keyframes`
         visibility: hidden;
     }
 `;
-export const RegisterInput = styled.input`
+export const RegisterInput = styled.input<{
+  isError?: boolean;
+  isInquiry?: boolean;
+}>`
   margin: 0;
   padding: 0;
   background: ${props => props.theme.colors.grey20};
@@ -120,7 +125,7 @@ export const RegisterInput = styled.input`
   color: ${props => props.theme.colors.white10};
 
   ${props =>
-    props.isErr &&
+    props.isError &&
     `
         color: ${props.theme.colors.red10};
     `}
@@ -139,7 +144,9 @@ export const RegisterButtonsContainer = styled.div`
   align-self: center;
   width: 100%;
 `;
-export const RegisterButton = styled.button`
+export const RegisterButton = styled.button<{
+  isBlock?: boolean;
+}>`
   margin: 0;
   padding: 0;
   border: transparent;

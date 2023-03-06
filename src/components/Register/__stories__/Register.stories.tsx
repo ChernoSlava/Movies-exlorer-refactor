@@ -1,6 +1,8 @@
 /* eslint-disable react/function-component-definition */
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 
 import { useForm } from '../../../hooks';
 import { Logo } from '../../Logo';
@@ -12,10 +14,10 @@ export default {
   argTypes: {
     onClickForNavigate: { action: 'clicked' },
   },
-};
+} as ComponentMeta<typeof Register>;
 
-const Template = args => {
-  const { values, errors, handleChange } = useForm({});
+const Template: ComponentStory<typeof Register> = args => {
+  const { values, errors, handleChange } = useForm();
   return (
     <Register
       {...args}
@@ -32,7 +34,7 @@ const Template = args => {
 export const Primary = Template.bind({});
 
 Primary.args = {
-  handleSubmit: e => {
+  handleSubmit: (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     action('handleSubmit')(e);
   },

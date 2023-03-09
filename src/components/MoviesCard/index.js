@@ -1,1 +1,0 @@
-export { MoviesCard } from './MoviesCard';

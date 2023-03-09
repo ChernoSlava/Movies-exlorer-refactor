@@ -21,7 +21,8 @@
 - Higher-Order Components,
 - Storybook,
 - Styled Components,
-- ESLint;
+- ESLint
+- TypeScript;
 ---
 
 ## Предпросмотр проекта
@@ -134,7 +135,8 @@
 ## Задача по рефакторингу
 ### Level-1 - Подключить ESLint и перевести проект на Styled component ( Доп.-использовать звуковые эффекты )
 ### Level-2 - Сделать декомпозицию проекта ( Разделить логику и компоненты, подключить Storybook )
-### Level-3 - Перевести проект на TypeScript и подключить Redux
+### Level-3 - Перевести проект на TypeScript
+### Level-4 - Заменить use Context на Redux 
 
 --- 
 ## Основные ссылки

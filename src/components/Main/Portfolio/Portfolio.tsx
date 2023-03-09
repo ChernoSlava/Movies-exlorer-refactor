@@ -27,7 +27,7 @@ export const Portfolio: React.FC = (): JSX.Element => {
         </PortfolioList>
         <PortfolioList>
           <PortfolioLink
-            href="http://chernoslava.github.io/russian-travel/"
+            href="http://chernoslava.github.io/Russian-travel/"
             target="_blank"
             rel="noreferrer">
             <PortfolioText>Адаптивный сайт</PortfolioText>

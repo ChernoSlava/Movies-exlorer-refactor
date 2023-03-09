@@ -10,7 +10,7 @@ import {
   FooterTitle,
 } from './styled';
 
-export type IsLastType = { isLast: boolean | '' };
+export type IsLastType = { isLast?: boolean | '' };
 
 export const Footer: React.FC<IsLastType> = (): JSX.Element => {
   return (

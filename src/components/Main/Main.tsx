@@ -1,5 +1,4 @@
 import React from 'react';
-import { PropTypes } from 'prop-types';
 
 import { Footer } from '../Footer';
 
@@ -10,7 +9,9 @@ import { Promo } from './Promo';
 import { MainStyled } from './styled';
 import { Techs } from './Techs';
 
-export function Main({ header }) {
+export const Main: React.FC<{
+  header: React.ReactElement | null;
+}> = ({ header }):JSX.Element => {
   return (
     <>
       {header}
@@ -25,7 +26,3 @@ export function Main({ header }) {
     </>
   );
 }
-
-Main.propTypes = {
-  header: PropTypes.element.isRequired,
-};

@@ -4,7 +4,7 @@ import { Button } from '../Button';
 
 import { NavTabStyled } from './styled';
 
-export function NavTab() {
+export const NavTab: React.FC = ():JSX.Element => {
   return (
     <NavTabStyled>
       <Button title="О проекте" link="#about-project" />

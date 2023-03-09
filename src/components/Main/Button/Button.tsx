@@ -1,17 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { ButtonStyled, ButtonText } from './styled';
 
-export function Button({ title, link }) {
+export const Button: React.FC<{
+  title: string;
+  link: string;
+}> = ({ title, link }):JSX.Element => {
   return (
     <ButtonStyled type="button">
       <ButtonText href={link}>{title}</ButtonText>
     </ButtonStyled>
   );
 }
-
-Button.propTypes = {
-  title: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-};

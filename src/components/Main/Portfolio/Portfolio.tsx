@@ -11,7 +11,7 @@ import {
   PortfolioTitle,
 } from './styled';
 
-export function Portfolio() {
+export const Portfolio: React.FC = (): JSX.Element => {
   return (
     <PortfolioStyled>
       <PortfolioTitle>Портфолио</PortfolioTitle>

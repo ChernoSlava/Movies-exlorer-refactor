@@ -13,7 +13,7 @@ import {
   AboutMeTitle,
 } from './styled';
 
-export function AboutMe() {
+export const AboutMe:React.FC = ():JSX.Element => {
   return (
     <AboutMeStyled id="I'm">
       <AboutMeTitle>Технологии</AboutMeTitle>
@@ -28,7 +28,7 @@ export function AboutMe() {
             Сейчас живу в маленько городе Турции, продолжаю учиться и
             дополнительно занимаюсь с ментором.
           </AboutMeDescription>
-          <AboutMeLink href="https://github.com/ChernoSlava" Github />
+          <AboutMeLink href="https://github.com/ChernoSlava">Github</AboutMeLink>
         </AboutMeInfo>
         <AboutMeImageContainer>
           <AboutMeImage />

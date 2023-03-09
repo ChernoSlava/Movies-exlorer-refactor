@@ -11,7 +11,7 @@ import {
   TechsTitle,
 } from './styled';
 
-export function Techs() {
+export const Techs: React.FC = ():JSX.Element => {
   return (
     <TechsStyled id="techs">
       <TechsTitle>Технологии</TechsTitle>

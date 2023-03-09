@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes, { objectOf } from 'prop-types';
 
 import { movieData, MoviesCard } from '../MoviesCard';
 
@@ -81,12 +80,3 @@ export const MoviesCardList: React.FC<{
     </MoviesCardListStyled>
   );
 }
-// MoviesCardList.propTypes = {
-//   onSaveFilm: PropTypes.func,
-//   onDeleteFilm: PropTypes.func.isRequired,
-//   items: PropTypes.arrayOf(objectOf).isRequired,
-//   canPaged: PropTypes.bool.isRequired,
-// };
-// MoviesCardList.defaultProps = {
-//   onSaveFilm: PropTypes.func,
-// };

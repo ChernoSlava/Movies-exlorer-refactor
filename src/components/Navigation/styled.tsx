@@ -14,13 +14,19 @@ export const NavigationDesktopView = styled.div`
     display: none;
   }
 `;
-export const NavigationLink = styled.span`
+export const NavigationLink = styled.span<{
+  $isBtn?: boolean;
+  $isPprofile?: boolean;
+  $isActive?: boolean;
+  $isFirst?: boolean;
+  $isMini?: boolean;
+}>`
   > a {
     text-decoration: none;
     color: ${props => props.theme.colors.white10};
 
     ${props =>
-      props.$btn &&
+      props.$isBtn &&
       `
           color: ${props.theme.colors.black30};
       `}
@@ -37,17 +43,17 @@ export const NavigationLink = styled.span`
   color: ${props => props.theme.colors.white10};
   text-decoration: none;
   ${props =>
-    props.$active &&
+    props.$isActive &&
     `
         font-weight: 500;
     `}
   ${props =>
-    props.$first &&
+    props.$isFirst &&
     `
         padding-right: 20px;
     `}
     ${props =>
-    props.$mini &&
+    props.$isMini &&
     `
         font-size: 12px;
         @media screen and (max-width: 450px) {
@@ -55,7 +61,7 @@ export const NavigationLink = styled.span`
         }
     `}
     ${props =>
-    props.$btn &&
+    props.$isBtn &&
     `
         width: 76px;
         height: 32px;
@@ -75,7 +81,7 @@ export const NavigationLink = styled.span`
     `}
 
     ${props =>
-    props.$profile &&
+    props.$isPprofile &&
     `
         display: flex;
         align-items: center;
@@ -115,7 +121,9 @@ export const NavigationBurgerButton = styled.button`
     height: 43px;
   }
 `;
-export const NavigationSidebar = styled.div`
+export const NavigationSidebar = styled.div<{
+  isShow: boolean;
+}>`
   display: none;
 
   @media screen and (max-width: 768px) {
@@ -198,13 +206,16 @@ export const NavigationSidebarItem = styled.li`
   list-style-type: none;
 `;
 
-export const NavigationSidebarNavLink = styled.span`
+export const NavigationSidebarNavLink = styled.span<{
+  $isActive: boolean;
+  $isTop?: boolean;
+}>`
   > a {
     text-decoration: none;
     color: ${props => props.theme.colors.white10};
 
     ${props =>
-      props.$active &&
+      props.$isActive &&
       `
           border-bottom: 2px solid #FFFFFF;
           height: 26px;
@@ -214,7 +225,9 @@ export const NavigationSidebarNavLink = styled.span`
 export const NavigationSidebarProfile = styled.div`
   padding-bottom: 92px;
 `;
-export const NavigationSidebarLink = styled.span`
+export const NavigationSidebarLink = styled.span<{
+  $isBottom?: boolean;
+}>`
   > a {
     text-decoration: none;
     color: ${props => props.theme.colors.white10};

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 import React from 'react';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 // import { action } from '@storybook/addon-actions';
 import { NAVIGATION, ROUTER_PATH } from '../../../constants';
@@ -9,9 +10,14 @@ import { Navigation } from '../Navigation';
 export default {
   title: 'Example/Navigation',
   component: Navigation,
-};
-const Link = ({ children, to }) => <a href={to}>{children}</a>;
-const Template = args => {
+} as ComponentMeta<typeof Navigation>;
+
+const Link: React.FC<{
+  children: React.ReactElement | null;
+  to: string;
+}> = ({ children, to }) => <a href={to}>{children}</a>;
+
+const Template: ComponentStory<typeof Navigation> = args => {
   return (
     <Navigation
       {...args}

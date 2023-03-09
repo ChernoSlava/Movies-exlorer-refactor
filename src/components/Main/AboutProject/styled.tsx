@@ -102,7 +102,10 @@ export const AboutProjectProgressBarScales = styled.div`
     grid-template-columns: 100px 4fr;
   }
 `;
-export const AboutProjectProgressBarScale = styled.div`
+export const AboutProjectProgressBarScale = styled.div<{
+  green?: boolean;
+  grey?: boolean;
+}>`
   height: 36px;
   font-family: ${props => props.theme.fontFamily.standart};
   font-style: normal;

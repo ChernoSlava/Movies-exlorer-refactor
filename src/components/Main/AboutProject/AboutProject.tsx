@@ -14,7 +14,10 @@ import {
   AboutProjectTitle,
 } from './styled';
 
-export function AboutProject() {
+export const AboutProject:React.FC<{
+  green?: boolean;
+  grey?: boolean;
+}> = ():JSX.Element => {
   return (
     <AboutProjectStyled id="about-project">
       <AboutProjectTitle>О проекте</AboutProjectTitle>

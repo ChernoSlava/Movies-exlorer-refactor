@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "outDir": "./build",
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "esModuleInterop": true, //  для ts imports
   },
   "include": [
     "src/**/*.ts",

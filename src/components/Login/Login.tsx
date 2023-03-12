@@ -54,7 +54,7 @@ export const Login: React.FC<{
 
   return (
     <LoginStyled>
-      <LoginForm onSubmit={handleSubmit} noValidate>
+      <LoginForm noValidate>
         <LoginLogo>{logo}</LoginLogo>
         <LoginTitle>Скорее на борт!</LoginTitle>
         <LoginFieldset>
@@ -109,7 +109,8 @@ export const Login: React.FC<{
         </LoginFieldset>
         <LoginButtonContainer>
           <LoginSubmitButton
-            type="submit"
+            type="button"
+            onClick={handleSubmit}
             isBlock={isDisabled}
             disabled={isDisabled}>
             Отправляемся

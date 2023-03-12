@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   ProfileBorder,
@@ -56,7 +55,7 @@ export const Profile: React.FC<{
       <>
         {header}
         <ProfileStyled>
-          <ProfileForm onSubmit={handleSubmit} noValidate>
+          <ProfileForm noValidate>
             <ProfileTitle>Добро пожаловать, уважаемый {name}!</ProfileTitle>
             <ProfileFieldset>
               <ProfileLabel htmlFor="name">
@@ -91,7 +90,8 @@ export const Profile: React.FC<{
               <ProfileButtonsContainer>
                 <ProfileButton
                   isEdit
-                  type="submit"
+                  type="button"
+                  onClick={handleSubmit}
                   isDisabled={isDisabled}
                   disabled={isDisabled}>
                   Изменить хроники
@@ -106,28 +106,3 @@ export const Profile: React.FC<{
       </>
     );
   }
-
-Profile.propTypes = {
-  errors: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-  }),
-  values: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-  }),
-  header: PropTypes.element.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
-  isInutErrorName: PropTypes.bool,
-  isInutErrorEmail: PropTypes.bool,
-  onSignOut: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-};
-Profile.defaultProps = {
-  errors: {},
-  values: {},
-  isInutErrorName: undefined,
-  isInutErrorEmail: undefined,
-};

@@ -11,10 +11,9 @@ export function RegisterContainer() {
   const navigate = useNavigate();
   const { loggedIn, onRegistration, isRegisterProcess } =
     useContext(AuthContext);
-  const { values, handleChange, resetForm, errors } = useForm({});
+  const { values, handleChange, resetForm, errors } = useForm();
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
+  const handleSubmit = () => {
     onRegistration(values);
   };
 

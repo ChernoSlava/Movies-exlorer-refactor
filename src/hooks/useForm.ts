@@ -2,8 +2,12 @@ import { useCallback, useState } from 'react';
 import isEmail from 'validator/es/lib/isEmail';
 
 export function useForm() {
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
+  const [values, setValues] = useState<{
+    [key in string]?: string;
+  }>({});
+  const [errors, setErrors] = useState<{
+    [key in string]?: string;
+  }>({});
   const [isEmptiness, setIsEmptiness] = useState(false);
 
   const handleChange = (target: HTMLInputElement ) => {

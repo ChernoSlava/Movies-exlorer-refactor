@@ -5,7 +5,7 @@ import { Navigation } from '../../components';
 import { NAVIGATION, ROUTER_PATH } from '../../constants';
 import { AuthContext } from '../../contexts';
 
-export function NavigationContainer() {
+export const NavigationContainer:React.FC = ():JSX.Element => {
   const location = useLocation();
   const { loggedIn } = useContext(AuthContext);
 

@@ -5,16 +5,15 @@ import { AuthContext, CurrentUserContext } from '../../contexts';
 import { useForm } from '../../hooks';
 import { HeaderContainer } from '../HeaderContainer';
 
-export function ProfileContainer() {
+export const ProfileContainer:React.FC = ():JSX.Element => {
   const { onChangeProfile, onSignOut } = useContext(AuthContext);
 
   const user = useContext(CurrentUserContext);
   const { name, email } = user;
 
-  const { values, handleChange, resetForm, errors } = useForm({});
+  const { values, handleChange, resetForm, errors } = useForm();
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = () => {
     onChangeProfile(values);
   };
 

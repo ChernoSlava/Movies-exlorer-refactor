@@ -5,3 +5,8 @@ export const MoviesContext = createContext({
   onDeleteFilm: () => {},
   savedMoviesList: [],
 });
+// <{
+//   onSaveFilm?: () => void,
+//   onDeleteFilm?: () => void,
+//   savedMoviesList: [],
+// }>

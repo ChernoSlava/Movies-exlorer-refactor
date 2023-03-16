@@ -4,11 +4,11 @@ import { Header } from '../../components/Header';
 import { LogoContainer } from '../LogoContainer';
 import { NavigationContainer } from '../NavigationContainer';
 
-export function HeaderContainer() {
+export const HeaderContainer: React.FC = (): JSX.Element => {
   return (
-    <Header>
-      <LogoContainer />
-      <NavigationContainer />
-    </Header>
+      <Header>
+        <LogoContainer />
+        <NavigationContainer />
+      </Header>
   );
 }

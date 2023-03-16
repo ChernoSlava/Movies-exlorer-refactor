@@ -54,7 +54,7 @@ export const Login: React.FC<{
 
   return (
     <LoginStyled>
-      <LoginForm onSubmit={handleSubmit} noValidate>
+      <LoginForm noValidate>
         <LoginLogo>{logo}</LoginLogo>
         <LoginTitle>Скорее на борт!</LoginTitle>
         <LoginFieldset>
@@ -109,7 +109,8 @@ export const Login: React.FC<{
         </LoginFieldset>
         <LoginButtonContainer>
           <LoginSubmitButton
-            type="submit"
+            type="button"
+            onClick={handleSubmit}
             isBlock={isDisabled}
             disabled={isDisabled}>
             Отправляемся
@@ -125,24 +126,3 @@ export const Login: React.FC<{
     </LoginStyled>
   );
 }
-
-// Login.propTypes = {
-//   errors: PropTypes.shape({
-//     password: PropTypes.string,
-//     email: PropTypes.string,
-//   }),
-//   values: PropTypes.shape({
-//     password: PropTypes.string,
-//     email: PropTypes.string,
-//   }),
-//   logo: PropTypes.element.isRequired,
-//   handleSubmit: PropTypes.func.isRequired,
-//   handleChange: PropTypes.func.isRequired,
-//   isLoginProcess: PropTypes.bool.isRequired,
-//   isDisabled: PropTypes.bool.isRequired,
-//   onClickForNavigate: PropTypes.func.isRequired,
-// };
-// Login.defaultProps = {
-//   errors: {},
-//   values: {},
-// };

@@ -10,6 +10,7 @@ import {
   MoviesContext,
   SearchFormContext,
 } from '../../contexts';
+import { MovieListDto, MovieItemDto, MovieItem, MovieList, MovieImage } from '../../types';
 import { moviesApi, transformDuration } from '../../utils';
 
 import { MoviesCardListContainer } from './MoviesCardListContainer';
@@ -21,17 +22,17 @@ export function Movies() {
   const { email } = useContext(CurrentUserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [moviesFromSearch, setMoviesFromSearch] = useState([]);
-  const [shortMovies, setShortMovies] = useState(false);
+  const [isShortMovies, setShowShortMovies] = useState(false);
   const [filteredMovies, setFilteredMovies] = useState([]);
 
-  function filterShortMovies(movies) {
-    return movies.filter(movie => movie.duration < SHORT_DURATION);
+  const filterShortMovies = (movies: MovieListDto) => {
+    return movies.filter((movie) => movie.duration < SHORT_DURATION);
   }
-  function filterMovies(movies, userSearch) {
-    function lower(x) {
+  function filterMovies(movies: MovieListDto, userSearch: string) {
+    function lower(x: string) {
       return x.toLowerCase().trim();
     }
-    return movies.filter(movie => {
+    return movies.filter((movie) => {
       const userMovie = lower(userSearch);
       const movieRu = lower(String(movie.nameRU)).indexOf(userMovie) !== -1;
       const movieEn = lower(String(movie.nameEN)).indexOf(userMovie) !== -1;
@@ -39,15 +40,15 @@ export function Movies() {
       return result;
     });
   }
-  function transformMovies(movies) {
-    return movies.map(movie => ({
+  const transformMovies = (movies: MovieListDto): MovieList => {
+    return movies.map((movie) => ({
       ...movie,
       image: !movie.image
         ? process.env.REACT_APP_DEFAULT_IMAGE
-        : `https://api.nomoreparties.co${movie.image.url}`,
+        : `https://api.nomoreparties.co${(movie.image as MovieImage).url}`,
       thumbnail: !movie.image
         ? process.env.REACT_APP_DEFAULT_IMAGE
-        : `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+        : `https://api.nomoreparties.co${(movie.image as MovieImage).formats.thumbnail.url}`,
       country: !movie.country ? 'Russia' : movie.country,
       nameEN: !movie.nameEN ? movie.nameRU : movie.nameEN,
       nameRU: !movie.nameRU ? movie.nameEN : movie.nameRU,
@@ -59,22 +60,22 @@ export function Movies() {
     }));
   }
 
-  function handleAnswerMovies(movies, searchData, checkbox) {
+  function handleAnswerMovies(movies: MovieList, searchData: string, checkbox: boolean) {
     const moviesBlock = filterMovies(movies, searchData);
     setMoviesFromSearch(moviesBlock);
     setFilteredMovies(checkbox ? filterShortMovies(moviesBlock) : moviesBlock);
   }
 
-  function handleSearch(value, isShortMovies) {
+  function handleSearch(value: string, isShortMovies: boolean) {
     localStorage.setItem(`${email} - movieSearch`, value);
-    localStorage.setItem(`${email} - shortMovies`, shortMovies);
+    localStorage.setItem(`${email} - shortMovies`, String(isShortMovies));
 
     const storageMovies = localStorage.getItem(`${email} - movies`);
     if (!storageMovies) {
       setIsLoading(true);
       moviesApi
         .getAllMovies()
-        .then(movies => {
+        .then((movies: MovieListDto) => {
           localStorage.setItem(`${email} - movies`, JSON.stringify(movies));
           handleAnswerMovies(transformMovies(movies), value, isShortMovies);
         })
@@ -95,20 +96,20 @@ export function Movies() {
   }
 
   const handleShortMovies = () => {
-    setShortMovies(!shortMovies);
-    if (!shortMovies) {
+    setShowShortMovies(!isShortMovies);
+    if (!isShortMovies) {
       setFilteredMovies(filterShortMovies(moviesFromSearch));
     } else {
       setFilteredMovies(moviesFromSearch);
     }
 
-    localStorage.setItem(`${email} - shortMovies`, !shortMovies);
+    localStorage.setItem(`${email} - shortMovies`, String(!isShortMovies));
   };
 
   useEffect(() => {
     const isShortMovies =
       localStorage.getItem(`${email} - shortMovies`) === 'true';
-    setShortMovies(isShortMovies);
+    setShowShortMovies(isShortMovies);
   }, [email]);
 
   useEffect(() => {
@@ -129,10 +130,10 @@ export function Movies() {
   const SearchFormContextValue = useMemo(
     () => ({
       handleShortMovies,
-      isShortMovies: shortMovies,
-      onSearch: value => handleSearch(value, shortMovies),
+      isShortMovies: isShortMovies,
+      onSearch: (values: { [key in string]?: string; }) => handleSearch(values.film, isShortMovies),
     }),
-    [handleShortMovies, shortMovies, handleSearch],
+    [handleShortMovies, isShortMovies, handleSearch],
   );
   return (
     <>

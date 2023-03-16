@@ -65,7 +65,7 @@ export const MoviesCardButton = styled.button`
   margin-bottom: 80px;
   width: 100%;
   height: 36px;
-  background: #2f2f2f;
+  background: ${props => props.theme.color.grey20};;
   border-radius: 6px;
   border: none;
   cursor: pointer;

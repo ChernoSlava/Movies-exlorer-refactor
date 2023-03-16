@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ErrorPage } from '../../components';
 
-export function ErrorPageContainer() {
+export const ErrorPageContainer:React.FC = ():JSX.Element => {
   const navigate = useNavigate();
   const back = () => navigate(-1);
 

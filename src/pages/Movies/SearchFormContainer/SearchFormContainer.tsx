@@ -12,7 +12,7 @@ export function SearchFormContainer() {
   const { onSearch, handleShortMovies, isShortMovies } =
     useContext(SearchFormContext);
 
-  const { values, handleChange, isEmptiness, setIsEmptiness } = useForm({});
+  const { values, handleChange, isEmptiness, setIsEmptiness } = useForm();
   const [emptySearch, setEmptySearch] = useState('');
 
   const textError = 'Нужно ввести ключевое слово.';
@@ -20,10 +20,9 @@ export function SearchFormContainer() {
   const savedMoviesLocation = location.pathname === ROUTER_PATH.SAVED_MOVIES;
   const hasError = !savedMoviesLocation && !!emptySearch;
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
+  const handleSubmit = () => {
     if (isEmptiness) {
-      onSearch(values.film);
+      onSearch(values);
     } else {
       setEmptySearch(textError);
     }

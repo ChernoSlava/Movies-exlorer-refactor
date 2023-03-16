@@ -7,13 +7,12 @@ import { AuthContext } from '../../contexts';
 import { useForm } from '../../hooks';
 import { LogoContainer } from '../LogoContainer';
 
-export function LoginContainer() {
+export const LoginContainer: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { loggedIn, onAuthorization, isLoginProcess } = useContext(AuthContext);
-  const { values, handleChange, resetForm, errors } = useForm({});
+  const { values, handleChange, resetForm, errors } = useForm();
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
+  const handleSubmit = () => {
     onAuthorization(values);
   };
 
@@ -25,8 +24,12 @@ export function LoginContainer() {
   const isEmptyValues = !values.password || !values.email;
   const isDisabled = isErrors || isEmptyValues || isLoginProcess;
 
+  useEffect(() => {
+    loggedIn && navigate(ROUTER_PATH.MAIN)
+  }, [loggedIn]);
+
   return loggedIn ? (
-    navigate(ROUTER_PATH.MAIN)
+    undefined
   ) : (
     <Login
       isDisabled={isDisabled}

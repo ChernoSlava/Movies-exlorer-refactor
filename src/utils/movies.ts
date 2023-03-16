@@ -1,4 +1,4 @@
-export function transformDuration(duration) {
+export function transformDuration(duration: number) {
   const hours = Math.trunc(duration / 60);
   const minutes = duration % 60;
   if (hours === 0) {

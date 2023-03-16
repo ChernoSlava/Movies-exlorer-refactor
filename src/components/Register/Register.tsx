@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   RegisterButton,
@@ -51,7 +50,7 @@ export const Register: React.FC<{
 }):JSX.Element => {
   return (
     <RegisterStyled>
-      <RegisterForm onSubmit={handleSubmit} noValidate>
+      <RegisterForm noValidate>
         <RegisterLogo>{logo}</RegisterLogo>
         <RegisterTitle>Добро пожаловать!</RegisterTitle>
         <RegisterFieldset>
@@ -114,7 +113,8 @@ export const Register: React.FC<{
         </RegisterFieldset>
         <RegisterButtonsContainer>
           <RegisterButton
-            type="submit"
+            type="button"
+            onClick={handleSubmit}
             isBlock={isDisabled}
             disabled={isDisabled}>
             Зарегистрироваться
@@ -130,26 +130,3 @@ export const Register: React.FC<{
     </RegisterStyled>
   );
 }
-
-Register.propTypes = {
-  errors: PropTypes.shape({
-    name: PropTypes.string,
-    password: PropTypes.string,
-    email: PropTypes.string,
-  }),
-  values: PropTypes.shape({
-    name: PropTypes.string,
-    password: PropTypes.string,
-    email: PropTypes.string,
-  }),
-  logo: PropTypes.element.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  isRegisterProcess: PropTypes.bool.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
-  onClickForNavigate: PropTypes.func.isRequired,
-};
-Register.defaultProps = {
-  errors: {},
-  values: {},
-};

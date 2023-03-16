@@ -39,19 +39,11 @@ export const Navigation: React.FC<{
   link: React.FC<{
     children: React.ReactElement | string;
     to: string;
-  }>;
+  } | any>;
   navLink: React.FC<{
     children: React.ReactElement | string;
     to: string;
-  }>;
-  isShow: boolean;
-  $isBtn?: boolean;
-  $isPprofile?: boolean;
-  $isActive?: boolean;
-  $isFirst?: boolean;
-  $isMini?: boolean;
-  $isTop?: boolean;
-  $isBottom?: boolean;
+  } | any>;
 }> = ({
   isShowBurgerMenu,
   isShowSidebar,

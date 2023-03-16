@@ -1,11 +1,15 @@
+import { MovieList } from "../types";
+
 /* eslint-disable class-methods-use-this */
 class MoviesApi {
-  constructor({ url, headers }) {
+  private _url: string;
+  private _headers: HeadersInit;
+  constructor({ url, headers }: {url: string, headers: HeadersInit}) {
     this._url = url;
     this._headers = headers;
   }
 
-  _checkResponse(res) {
+  _checkResponse(res: Response) {
     if (res.ok) {
       return res.json();
     }

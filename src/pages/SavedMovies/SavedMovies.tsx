@@ -2,17 +2,19 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { Footer, PageWrapper } from '../../components';
+import { movieData } from '../../components/MoviesCard';
 import { HeaderContainer } from '../../containers/HeaderContainer';
 import {
   CurrentUserContext,
   MoviesContext,
   SearchFormContext,
 } from '../../contexts';
+import { MovieItem, MovieList } from '../../types';
 import { transformDuration } from '../../utils';
 import { SearchFormContainer } from '../Movies';
 import { MoviesCardListContainer } from '../Movies/MoviesCardListContainer';
 
-function transformMovies(movies) {
+function transformMovies(movies: MovieList) {
   return movies.map(movie => ({
     ...movie,
     durationText: transformDuration(movie.duration),
@@ -30,11 +32,11 @@ export function SavedMovies() {
   );
   const [filteredMovies, setFilteredMovies] = useState(showedMovies);
 
-  function filterShortMovies(movies) {
+  function filterShortMovies(movies: MovieList) {
     return movies.filter(movie => movie.duration < 40);
   }
-  function filterMovies(movies, userSearch) {
-    function lower(x) {
+  function filterMovies(movies: MovieList, userSearch: string) {
+    function lower(x: string) {
       return x.toLowerCase().trim();
     }
     return movies.filter(movie => {
@@ -48,7 +50,7 @@ export function SavedMovies() {
       return true;
     });
   }
-  function handleSearchSubmit(inputValue, isShortMovies) {
+  function handleSearchSubmit(inputValue: string, isShortMovies: boolean) {
     setSearchQuery(inputValue);
     localStorage.setItem(`${email} - movieSearchSaved`, inputValue);
     let moviesList = filterMovies(savedMoviesList, inputValue);
@@ -61,7 +63,7 @@ export function SavedMovies() {
     moviesList = !shortMovies ? filterShortMovies(moviesList) : moviesList;
     setFilteredMovies(moviesList);
     setShortMovies(!shortMovies);
-    localStorage.setItem(`${email} - shortSavedMovies`, !shortMovies);
+    localStorage.setItem(`${email} - shortSavedMovies`, String(!shortMovies));
   };
 
   useEffect(() => {
@@ -75,7 +77,7 @@ export function SavedMovies() {
     () => ({
       handleShortMovies,
       isShortMovies: shortMovies,
-      onSearch: value => handleSearchSubmit(value, shortMovies),
+      onSearch: (values: { [key in string]?: string; }) => handleSearchSubmit(values.film, shortMovies),
     }),
     [handleShortMovies, shortMovies, handleSearchSubmit],
   );
@@ -89,7 +91,7 @@ export function SavedMovies() {
         </SearchFormContext.Provider>
         <MoviesCardListContainer
           onDeleteFilm={onDeleteFilm}
-          items={filteredMovies}
+          items={filteredMovies as Array<movieData>}
         />
       </PageWrapper>
       <Footer />

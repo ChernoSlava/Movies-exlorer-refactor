@@ -7,7 +7,7 @@ import { movieData } from '../../../components/MoviesCard';
 
 export const MoviesCardListContainer: React.FC<{
   onSaveFilm?: () => void;
-  onDeleteFilm: () => void;
+  onDeleteFilm?: () => void;
   items: Array<movieData>;
 }> = ({
   onSaveFilm,

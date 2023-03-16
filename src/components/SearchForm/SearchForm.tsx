@@ -31,7 +31,7 @@ export const SearchForm: React.FC<{
 }): JSX.Element => {
     return (
       <SearchFormStyled>
-        <SearchFormMain onSubmit={onSubmit} noValidate>
+        <SearchFormMain noValidate>
           <SearchFormFieldset>
             <SearchFormFieldError>{errorText}</SearchFormFieldError>
             <SearchFormInput
@@ -44,7 +44,7 @@ export const SearchForm: React.FC<{
               onChange={(e) => handleChange(e.target)}
               value={values.film || ''}
             />
-            <SearchFormButton type="submit" aria-label="Найти" />
+            <SearchFormButton onClick={onSubmit} type="button" aria-label="Найти" />
           </SearchFormFieldset>
           <SearchFormCheckboxContainer>
             <SearchFormCheckboxLabel htmlFor="box" checked={!!shortMovies}>
